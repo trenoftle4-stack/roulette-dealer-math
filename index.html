@@ -613,7 +613,13 @@ input{
       Check Answer
     </button>
 
-    <button id="newLayout">
+    <button
+      id="showBoardAnswer">
+      Show Answer
+    </button>
+
+    <button
+      id="newLayout">
       New Layout
     </button>
 
@@ -1734,6 +1740,11 @@ function newBoardLayout(){
   .textContent="";
 
 
+  document
+  .getElementById("boardResult")
+  .className="result";
+
+
   var used=
     new Set();
 
@@ -1845,6 +1856,32 @@ document
       "Not quite. Check your math and try again.";
 
   }
+
+};
+
+
+/* =========================================
+   SHOW BOARD ANSWER
+========================================= */
+
+document
+.getElementById("showBoardAnswer")
+.onclick=function(){
+
+  var result=
+    document.getElementById(
+      "boardResult"
+    );
+
+
+  result.className=
+    "result good";
+
+
+  result.textContent=
+    "Answer: "+
+    boardTotal+
+    " pieces.";
 
 };
 
