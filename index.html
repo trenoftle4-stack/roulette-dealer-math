@@ -1,141 +1,2166 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Roulette Dealer Math Trainer</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#101010;color:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding:18px}
-.app{max-width:680px;margin:auto}.top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:16px}
-h1{font-size:25px;margin:0 0 5px}.muted{color:#aaa;font-size:14px;line-height:1.4}
-.card{background:#1c1c1e;border:1px solid #333;border-radius:17px;padding:18px}
-.bet{background:#29292b;border-radius:13px;padding:14px;margin:10px 0}.type{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.06em;font-weight:700}.value{font-size:20px;font-weight:700;margin-top:5px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
-button{min-height:50px;border:0;border-radius:12px;font-size:16px;font-weight:700;padding:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.primary{background:#fff;color:#111}.secondary{background:#303033;color:#fff}.secondary:disabled{opacity:.4}
-.answer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #444;padding:10px 0;font-size:14px}.answer b{white-space:nowrap}.total{border-top:1px solid #555;padding-top:13px;margin-top:5px;display:flex;justify-content:space-between;font-size:19px;font-weight:800}
-.score{background:#29292b;border-radius:10px;padding:8px 11px;font-size:13px;white-space:nowrap}
-.note{margin-top:12px;font-size:12px;color:#888;text-align:center}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #07111b;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.app {
+  max-width: 1320px;
+  margin: auto;
+  padding: 12px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.logo {
+  font-size: 46px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(27px, 5vw, 44px);
+  line-height: 1.05;
+}
+
+.subtitle {
+  color: #b9c9da;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.tab {
+  flex: 1;
+  background: #16283a;
+  color: white;
+  border: 1px solid #3c536b;
+  border-radius: 10px;
+  padding: 14px 10px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.tab.active {
+  background: #079b4d;
+  border-color: #16d56c;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+.card {
+  background: #0d1b28;
+  border: 1px solid #30485e;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.bet {
+  padding: 12px 0;
+  border-bottom: 1px solid #2d4053;
+}
+
+.bet:last-child {
+  border-bottom: 0;
+}
+
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 9px;
+  font-size: 17px;
+  font-weight: 800;
+  color: white;
+  background: #304c68;
+}
+
+button.primary {
+  background: #08b957;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 9px;
+  border: 1px solid #48627a;
+  background: #14283a;
+  color: white;
+  font-size: 19px;
+}
+
+.answer {
+  color: #72f1a5;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.result {
+  min-height: 24px;
+  margin-top: 10px;
+  font-weight: 800;
+}
+
+.good {
+  color: #67f19b;
+}
+
+.bad {
+  color: #ff7373;
+}
+
+
+/* =========================
+   ROULETTE BOARD
+========================= */
+
+.board-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+}
+
+.board {
+  position: relative;
+  width: 1180px;
+  height: 720px;
+  min-width: 1180px;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #08753b 0%,
+      #045d2d 58%,
+      #034b25 100%
+    );
+
+  border: 18px solid #613718;
+  border-radius: 28px;
+
+  box-shadow:
+    inset 0 0 0 5px #9b6236,
+    0 10px 30px #0009;
+}
+
+.board-title {
+  position: absolute;
+  left: 30px;
+  top: 22px;
+  font-size: 29px;
+  font-weight: 900;
+}
+
+.board-sub {
+  position: absolute;
+  right: 30px;
+  top: 23px;
+  text-align: right;
+  color: #dce9f5;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.roulette-grid {
+  position: absolute;
+  left: 54px;
+  right: 54px;
+  top: 92px;
+  height: 300px;
+
+  display: grid;
+  grid-template-columns: 88px repeat(12, 1fr) 88px;
+  grid-template-rows: repeat(3, 100px);
+}
+
+.cell {
+  border: 1px solid rgba(255,255,255,.92);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  font-weight: 900;
+}
+
+.zero {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  background: #08733a;
+  font-size: 29px;
+}
+
+.zero0 {
+  grid-column: 1;
+  grid-row: 3;
+  background: #08733a;
+  font-size: 29px;
+}
+
+.number {
+  font-size: 27px;
+}
+
+.number.red {
+  background: #d3262d;
+}
+
+.number.black {
+  background: #111519;
+}
+
+.twoto1 {
+  font-size: 20px;
+}
+
+.dozens {
+  position: absolute;
+  left: 142px;
+  right: 142px;
+  top: 392px;
+  height: 76px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.outside {
+  position: absolute;
+  left: 142px;
+  right: 142px;
+  top: 468px;
+  height: 76px;
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.betbox {
+  border: 1px solid rgba(255,255,255,.92);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 900;
+  font-size: 21px;
+}
+
+.red-box {
+  background: rgba(160,20,28,.22);
+}
+
+.black-box {
+  background: rgba(0,0,0,.18);
+}
+
+
+/* =========================
+   CHIPS
+========================= */
+
+.chip {
+  position: absolute;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff9db 0 17%,
+      #e5c967 18% 55%,
+      #9a7017 56% 100%
+    );
+
+  border: 4px solid #eee7c9;
+
+  color: #101010;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 19px;
+  font-weight: 950;
+
+  box-shadow: 0 5px 8px rgba(0,0,0,.55);
+
+  z-index: 10;
+}
+
+.chip:after {
+  content: "";
+
+  position: absolute;
+
+  inset: 6px;
+
+  border: 2px dashed #765817;
+
+  border-radius: 50%;
+}
+
+.chip span {
+  position: relative;
+  z-index: 2;
+}
+
+.legend {
+  color: #c9d8e5;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.refgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 25px;
+
+  color: #d5e2ed;
+  font-size: 14px;
+}
+
+
+/* =========================
+   PHONE
+========================= */
+
+@media(max-width:600px) {
+
+  .app {
+    padding: 8px;
+  }
+
+  .logo {
+    font-size: 35px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .board-title {
+    font-size: 24px;
+  }
+
+  .board-sub {
+    font-size: 13px;
+  }
+}
 </style>
 </head>
+
+
 <body>
+
 <div class="app">
-<div class="top">
-<div><h1>Roulette Dealer Math</h1><div class="muted">Flash-card style dealer payout practice</div></div>
-<div class="score">Rounds: <span id="rounds">0</span></div>
+
+
+<header>
+
+  <div class="logo">🎰</div>
+
+  <div>
+
+    <h1>
+      Roulette Dealer Math Trainer
+    </h1>
+
+    <div class="subtitle">
+      Real Layout. Real Speed. Practice the payout math.
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     TABS
+========================= -->
+
+<div class="tabs">
+
+  <button
+    class="tab active"
+    id="dealerTab">
+    Dealer Math
+  </button>
+
+  <button
+    class="tab"
+    id="boardTab">
+    Board Math
+  </button>
+
 </div>
-<div class="card">
-<div id="bets" aria-live="polite"></div>
-<div id="answers" style="display:none">
-<h3 style="margin:18px 0 5px">Answers</h3>
-<div id="answerList"></div>
-<div class="total"><span>Total winnings</span><span id="total"></span></div>
+
+
+<!-- =========================
+     DEALER MATH TAB
+========================= -->
+
+<section
+  id="dealerPanel"
+  class="panel active">
+
+  <div class="card">
+
+    <h2>
+      Section 1: Dealer Math
+    </h2>
+
+    <p>
+      Identify each bet and calculate the winnings only.
+      The original wager is not included.
+    </p>
+
+    <div id="dealerBets"></div>
+
+    <button
+      class="primary"
+      id="generateBets">
+      Generate Bets
+    </button>
+
+    <button
+      id="showAnswers">
+      Show Answers
+    </button>
+
+    <button
+      id="nextRound">
+      Next Round
+    </button>
+
+    <div
+      id="dealerStatus"
+      class="result">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     BOARD MATH TAB
+========================= -->
+
+<section
+  id="boardPanel"
+  class="panel">
+
+  <div class="card">
+
+    <h2>
+      Section 2: Board Visual — How Many Pieces Do I Pay?
+    </h2>
+
+    <p>
+      Look at the actual betting layout.
+      The number printed on each chip is the number
+      of pieces on that bet.
+    </p>
+
+
+    <div class="board-scroll">
+
+      <div
+        class="board"
+        id="board">
+
+
+        <div class="board-title">
+          Roulette Dealer Math Trainer
+        </div>
+
+
+        <div class="board-sub">
+
+          Real Layout. Real Speed.<br>
+
+          Same math. No multipliers shown.<br>
+
+          Train like the table.
+
+        </div>
+
+
+        <!-- NUMBER BOARD -->
+
+        <div
+          class="roulette-grid"
+          id="rouletteGrid">
+        </div>
+
+
+        <!-- DOZENS -->
+
+        <div class="dozens">
+
+          <div class="betbox">
+            1st 12
+          </div>
+
+          <div class="betbox">
+            2nd 12
+          </div>
+
+          <div class="betbox">
+            3rd 12
+          </div>
+
+        </div>
+
+
+        <!-- OUTSIDE BETS -->
+
+        <div class="outside">
+
+          <div class="betbox">
+            1 to 18
+          </div>
+
+          <div class="betbox">
+            Even
+          </div>
+
+          <div class="betbox red-box">
+            Red
+          </div>
+
+          <div class="betbox black-box">
+            Black
+          </div>
+
+          <div class="betbox">
+            Odd
+          </div>
+
+          <div class="betbox">
+            19 to 36
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <div class="legend">
+
+      Chip number = number of pieces wagered.
+      Chip color has no meaning.
+
+    </div>
+
+  </div>
+
+
+  <!-- ANSWER -->
+
+  <div class="card">
+
+    <h3>
+      How many pieces do you pay out?
+    </h3>
+
+
+    <input
+      id="boardAnswer"
+      type="number"
+      inputmode="numeric"
+      placeholder="Enter total pieces...">
+
+
+    <button
+      class="primary"
+      id="checkBoard">
+
+      Check Answer
+
+    </button>
+
+
+    <button
+      id="newLayout">
+
+      New Layout
+
+    </button>
+
+
+    <div
+      id="boardResult"
+      class="result">
+    </div>
+
+  </div>
+
+
+  <!-- REFERENCE -->
+
+  <div class="card">
+
+    <h3>
+      Bet Types on Layout
+    </h3>
+
+
+    <div class="refgrid">
+
+      <div>
+        Straight Up (1 number)
+      </div>
+
+      <div>
+        Column (12 numbers)
+      </div>
+
+      <div>
+        Split (2 numbers)
+      </div>
+
+      <div>
+        Dozen (12 numbers)
+      </div>
+
+      <div>
+        Street (3 numbers)
+      </div>
+
+      <div>
+        1–18 (18 numbers)
+      </div>
+
+      <div>
+        Corner (4 numbers)
+      </div>
+
+      <div>
+        19–36 (18 numbers)
+      </div>
+
+      <div>
+        Six Line (6 numbers)
+      </div>
+
+      <div>
+        Even (18 numbers)
+      </div>
+
+      <div></div>
+
+      <div>
+        Odd / Red / Black (18 numbers)
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 </div>
-<div class="actions">
-<button id="generate" class="primary">Generate Bets</button>
-<button id="show" class="secondary" disabled>Show Answers</button>
-<button id="next" class="secondary" disabled>Next Round</button>
-</div>
-<div class="note">Winnings only — the original wager is returned separately.</div>
-</div>
-</div>
+
+
 <script>
+
 "use strict";
 
-const money = [5,10,15,20,25,50,100];
-const pick = a => a[Math.floor(Math.random() * a.length)];
-const fmt = n => "$" + n.toLocaleString("en-CA");
-let round = null;
-let roundCount = 0;
 
-function straight() {
-  return {type:"Straight Up", label:String(pick([...Array(37).keys()])), mult:35};
+/* =========================================
+   BASIC RANDOMIZER
+========================================= */
+
+function pick(array) {
+
+  return array[
+    Math.floor(
+      Math.random() * array.length
+    )
+  ];
+
 }
 
-function split() {
-  const n = pick([...Array(36).keys()].slice(1));
-  const choices = [];
-  if (n <= 35) choices.push(n + 1);
-  if (n >= 2) choices.push(n - 1);
-  return {type:"Split", label:n + "/" + pick(choices), mult:17};
+
+/* =========================================
+   TAB SWITCHING
+========================================= */
+
+document
+  .getElementById("dealerTab")
+  .onclick = function() {
+
+    document
+      .getElementById("dealerTab")
+      .classList
+      .add("active");
+
+    document
+      .getElementById("boardTab")
+      .classList
+      .remove("active");
+
+    document
+      .getElementById("dealerPanel")
+      .classList
+      .add("active");
+
+    document
+      .getElementById("boardPanel")
+      .classList
+      .remove("active");
+
+  };
+
+
+document
+  .getElementById("boardTab")
+  .onclick = function() {
+
+    document
+      .getElementById("boardTab")
+      .classList
+      .add("active");
+
+    document
+      .getElementById("dealerTab")
+      .classList
+      .remove("active");
+
+    document
+      .getElementById("boardPanel")
+      .classList
+      .add("active");
+
+    document
+      .getElementById("dealerPanel")
+      .classList
+      .remove("active");
+
+    if (boardBets.length === 0) {
+
+      newBoardLayout();
+
+    }
+
+  };
+
+
+/* =========================================
+   SECTION 1 — DEALER MATH
+========================================= */
+
+var stakes = [
+  5,
+  10,
+  15,
+  20,
+  25,
+  50,
+  100
+];
+
+
+var betTypes = [
+
+  {
+    name: "Straight Up",
+    mult: 35
+  },
+
+  {
+    name: "Split",
+    mult: 17
+  },
+
+  {
+    name: "Street",
+    mult: 11
+  },
+
+  {
+    name: "Corner",
+    mult: 8
+  },
+
+  {
+    name: "Six Line",
+    mult: 5
+  },
+
+  {
+    name: "Red / Black",
+    mult: 1
+  },
+
+  {
+    name: "Odd / Even",
+    mult: 1
+  },
+
+  {
+    name: "1–18 / 19–36",
+    mult: 1
+  },
+
+  {
+    name: "Dozen",
+    mult: 2
+  },
+
+  {
+    name: "Column",
+    mult: 2
+  }
+
+];
+
+
+var dealerBets = [];
+
+
+function makeDealerBet() {
+
+  var type = pick(betTypes);
+
+  var label = type.name;
+
+
+  if (type.name === "Straight Up") {
+
+    label +=
+      " " +
+      pick(
+        Array.from(
+          {length:36},
+          function(_, i) {
+            return i + 1;
+          }
+        )
+      );
+
+  }
+
+
+  if (type.name === "Split") {
+
+    var splitN =
+      pick(
+        Array.from(
+          {length:35},
+          function(_, i) {
+            return i + 1;
+          }
+        )
+      );
+
+    label +=
+      " " +
+      splitN +
+      " / " +
+      (splitN + 1);
+
+  }
+
+
+  if (type.name === "Street") {
+
+    var streetN =
+      pick(
+        Array.from(
+          {length:12},
+          function(_, i) {
+            return i * 3 + 1;
+          }
+        )
+      );
+
+    label +=
+      " " +
+      streetN +
+      "-" +
+      (streetN + 2);
+
+  }
+
+
+  if (type.name === "Corner") {
+
+    var col =
+      pick(
+        Array.from(
+          {length:11},
+          function(_, i) {
+            return i;
+          }
+        )
+      );
+
+    var row =
+      pick([0,1]);
+
+
+    var a =
+      col * 3 +
+      row +
+      1;
+
+
+    label +=
+      " " +
+      a +
+      ", " +
+      (a + 1) +
+      ", " +
+      (a + 3) +
+      ", " +
+      (a + 4);
+
+  }
+
+
+  if (type.name === "Six Line") {
+
+    var sixN =
+      pick(
+        Array.from(
+          {length:11},
+          function(_, i) {
+            return i * 3 + 1;
+          }
+        )
+      );
+
+    label +=
+      " " +
+      sixN +
+      "-" +
+      (sixN + 5);
+
+  }
+
+
+  if (type.name === "Red / Black") {
+
+    label =
+      pick([
+        "Red",
+        "Black"
+      ]);
+
+  }
+
+
+  if (type.name === "Odd / Even") {
+
+    label =
+      pick([
+        "Odd",
+        "Even"
+      ]);
+
+  }
+
+
+  if (type.name === "1–18 / 19–36") {
+
+    label =
+      pick([
+        "1–18",
+        "19–36"
+      ]);
+
+  }
+
+
+  if (type.name === "Dozen") {
+
+    label =
+      pick([
+        "1st 12",
+        "2nd 12",
+        "3rd 12"
+      ]);
+
+  }
+
+
+  if (type.name === "Column") {
+
+    label =
+      "Column " +
+      pick([1,2,3]);
+
+  }
+
+
+  var stake =
+    pick(stakes);
+
+
+  return {
+
+    label: label,
+
+    mult: type.mult,
+
+    stake: stake,
+
+    winnings:
+      stake * type.mult
+
+  };
+
 }
 
-function street() {
-  const b = pick([1,4,7,10,13,16,19,22,25,28,31,34]);
-  return {type:"Street", label:b+"-"+(b+1)+"-"+(b+2), mult:11};
+
+function renderDealer(showAnswers) {
+
+  var box =
+    document.getElementById(
+      "dealerBets"
+    );
+
+
+  box.innerHTML = "";
+
+
+  dealerBets.forEach(
+    function(bet, index) {
+
+      var div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className = "bet";
+
+
+      var text =
+        "<b>" +
+        (index + 1) +
+        ". " +
+        bet.label +
+        "</b> — $" +
+        bet.stake;
+
+
+      if (showAnswers) {
+
+        text +=
+          '<div class="answer">' +
+          "Winnings: $" +
+          bet.winnings +
+          "</div>";
+
+      } else {
+
+        text +=
+          "<div>Calculate the winnings.</div>";
+
+      }
+
+
+      div.innerHTML = text;
+
+
+      box.appendChild(div);
+
+    }
+  );
+
 }
 
-function corner() {
-  const b = pick([1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32]);
-  return {type:"Corner", label:b+"/"+(b+1)+"/"+(b+3)+"/"+(b+4), mult:8};
+
+function generateDealerBets() {
+
+  dealerBets = [];
+
+
+  var numberOfBets =
+    4 +
+    Math.floor(
+      Math.random() * 4
+    );
+
+
+  for (
+    var i = 0;
+    i < numberOfBets;
+    i++
+  ) {
+
+    dealerBets.push(
+      makeDealerBet()
+    );
+
+  }
+
+
+  renderDealer(false);
+
+
+  document
+    .getElementById("dealerStatus")
+    .textContent = "";
+
 }
 
-function sixLine() {
-  const b = pick([1,4,7,10,13,16,19,22,25,28,31]);
-  return {type:"Six Line", label:b+"-"+(b+5), mult:5};
+
+document
+  .getElementById("generateBets")
+  .onclick =
+  function() {
+
+    generateDealerBets();
+
+  };
+
+
+document
+  .getElementById("showAnswers")
+  .onclick =
+  function() {
+
+    renderDealer(true);
+
+  };
+
+
+document
+  .getElementById("nextRound")
+  .onclick =
+  function() {
+
+    generateDealerBets();
+
+  };
+
+
+/* =========================================
+   BUILD AMERICAN ROULETTE BOARD
+========================================= */
+
+var redNumbers =
+  new Set([
+
+    1,3,5,7,9,12,
+    14,16,18,19,
+    21,23,25,27,
+    30,32,34,36
+
+  ]);
+
+
+function buildRouletteBoard() {
+
+  var grid =
+    document.getElementById(
+      "rouletteGrid"
+    );
+
+
+  grid.innerHTML = "";
+
+
+  /* 00 */
+
+  var zeroZero =
+    document.createElement(
+      "div"
+    );
+
+
+  zeroZero.className =
+    "cell zero";
+
+
+  zeroZero.textContent =
+    "00";
+
+
+  grid.appendChild(
+    zeroZero
+  );
+
+
+  /*
+    TOP:
+    3 6 9 ... 36
+
+    MIDDLE:
+    2 5 8 ... 35
+
+    BOTTOM:
+    1 4 7 ... 34
+  */
+
+
+  for (
+    var row = 0;
+    row < 3;
+    row++
+  ) {
+
+    for (
+      var col = 0;
+      col < 12;
+      col++
+    ) {
+
+      var number =
+        col * 3 +
+        (3 - row);
+
+
+      var cell =
+        document.createElement(
+          "div"
+        );
+
+
+      cell.className =
+        "cell number " +
+        (
+          redNumbers.has(number)
+          ? "red"
+          : "black"
+        );
+
+
+      cell.textContent =
+        number;
+
+
+      cell.dataset.number =
+        number;
+
+
+      grid.appendChild(
+        cell
+      );
+
+    }
+
+  }
+
+
+  /* 0 */
+
+  var zero =
+    document.createElement(
+      "div"
+    );
+
+
+  zero.className =
+    "cell zero0";
+
+
+  zero.textContent =
+    "0";
+
+
+  grid.appendChild(
+    zero
+  );
+
+
+  /* 2 TO 1 */
+
+  for (
+    var r = 0;
+    r < 3;
+    r++
+  ) {
+
+    var two =
+      document.createElement(
+        "div"
+      );
+
+
+    two.className =
+      "cell twoto1";
+
+
+    two.textContent =
+      "2 to 1";
+
+
+    grid.appendChild(
+      two
+    );
+
+  }
+
 }
 
-function evenMoney() {
-  const x = pick(["Red","Black","Odd","Even","1-18","19-36"]);
-  return {type:x, label:x, mult:1};
+
+buildRouletteBoard();
+
+
+/* =========================================
+   BOARD BETS
+========================================= */
+
+var boardBets = [];
+
+var boardTotal = 0;
+
+
+function makeBoardBet() {
+
+  var types = [
+
+    "straight",
+    "split",
+    "street",
+    "corner",
+    "sixline",
+    "dozen",
+    "column",
+    "outside"
+
+  ];
+
+
+  var type =
+    pick(types);
+
+
+  var count =
+    pick([
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20
+    ]);
+
+
+  /* STRAIGHT */
+
+  if (type === "straight") {
+
+    return {
+
+      type: type,
+
+      count: count,
+
+      mult: 35,
+
+      n:
+        pick(
+          Array.from(
+            {length:36},
+            function(_,i) {
+              return i + 1;
+            }
+          )
+        )
+
+    };
+
+  }
+
+
+  /* SPLIT */
+
+  if (type === "split") {
+
+    var col =
+      pick(
+        Array.from(
+          {length:12},
+          function(_,i) {
+            return i;
+          }
+        )
+      );
+
+
+    var row =
+      pick([0,1,2]);
+
+
+    var horizontal =
+      Math.random() < 0.5;
+
+
+    if (
+      horizontal &&
+      col < 11
+    ) {
+
+      return {
+
+        type:type,
+
+        count:count,
+
+        mult:17,
+
+        a:
+          col * 3 +
+          (3-row),
+
+        b:
+          (col+1) * 3 +
+          (3-row),
+
+        orientation:"h",
+
+        col:col,
+
+        row:row
+
+      };
+
+    }
+
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:17,
+
+      a:
+        col * 3 +
+        (3-row),
+
+      b:
+        col * 3 +
+        (2-row),
+
+      orientation:"v",
+
+      col:col,
+
+      row:row
+
+    };
+
+  }
+
+
+  /* STREET */
+
+  if (type === "street") {
+
+    var streetCol =
+      pick(
+        Array.from(
+          {length:12},
+          function(_,i) {
+            return i;
+          }
+        )
+      );
+
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:11,
+
+      start:
+        streetCol * 3 + 1,
+
+      col:streetCol
+
+    };
+
+  }
+
+
+  /* CORNER */
+
+  if (type === "corner") {
+
+    var cornerCol =
+      pick(
+        Array.from(
+          {length:11},
+          function(_,i) {
+            return i;
+          }
+        )
+      );
+
+
+    var cornerRow =
+      pick([0,1]);
+
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:8,
+
+      col:cornerCol,
+
+      row:cornerRow
+
+    };
+
+  }
+
+
+  /* SIX LINE */
+
+  if (type === "sixline") {
+
+    var lineCol =
+      pick(
+        Array.from(
+          {length:11},
+          function(_,i) {
+            return i;
+          }
+        )
+      );
+
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:5,
+
+      start:
+        lineCol * 3 + 1,
+
+      col:lineCol
+
+    };
+
+  }
+
+
+  /* DOZEN */
+
+  if (type === "dozen") {
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:2,
+
+      dozen:
+        pick([1,2,3])
+
+    };
+
+  }
+
+
+  /* COLUMN */
+
+  if (type === "column") {
+
+    return {
+
+      type:type,
+
+      count:count,
+
+      mult:2,
+
+      column:
+        pick([1,2,3])
+
+    };
+
+  }
+
+
+  /* OUTSIDE */
+
+  return {
+
+    type:type,
+
+    count:count,
+
+    mult:1,
+
+    outside:
+      pick([
+        "low",
+        "even",
+        "red",
+        "black",
+        "odd",
+        "high"
+      ])
+
+  };
+
 }
 
-function dozen() {
-  const d = pick([1,2,3]);
-  return {type:"Dozen", label:d+(d===1?"st":d===2?"nd":"rd")+" Dozen", mult:2};
+
+/* =========================================
+   BOARD BET UNIQUE KEY
+========================================= */
+
+function boardBetKey(bet) {
+
+  return [
+
+    bet.type,
+    bet.n,
+    bet.a,
+    bet.b,
+    bet.col,
+    bet.row,
+    bet.dozen,
+    bet.column,
+    bet.outside
+
+  ].join("|");
+
 }
 
-function column() {
-  const c = pick([1,2,3]);
-  return {type:"Column", label:"Column "+c, mult:2};
+
+/* =========================================
+   CHIP
+========================================= */
+
+function addChip(
+  left,
+  top,
+  count
+) {
+
+  var chip =
+    document.createElement(
+      "div"
+    );
+
+
+  chip.className =
+    "chip";
+
+
+  chip.style.left =
+    left + "px";
+
+
+  chip.style.top =
+    top + "px";
+
+
+  var span =
+    document.createElement(
+      "span"
+    );
+
+
+  span.textContent =
+    count;
+
+
+  chip.appendChild(
+    span
+  );
+
+
+  document
+    .getElementById("board")
+    .appendChild(chip);
+
 }
 
-function makeBet() {
-  const makers = [straight,split,street,corner,sixLine,evenMoney,dozen,column];
-  const b = pick(makers)();
-  b.stake = pick(money);
-  b.payout = b.stake * b.mult;
-  return b;
+
+function clearChips() {
+
+  var chips =
+    document.querySelectorAll(
+      ".chip"
+    );
+
+
+  chips.forEach(
+    function(chip) {
+
+      chip.remove();
+
+    }
+  );
+
 }
 
-function generate() {
-  round = Array.from({length:pick([4,5,6,7])}, makeBet);
-  roundCount++;
 
-  document.getElementById("rounds").textContent = roundCount;
-  document.getElementById("bets").innerHTML = round.map((b,i) =>
-    '<div class="bet"><div class="type">Bet '+(i+1)+' · '+b.type+
-    '</div><div class="value">'+b.label+' — '+fmt(b.stake)+'</div></div>'
-  ).join("");
+/* =========================================
+   POSITION CHIPS
+========================================= */
 
-  document.getElementById("answers").style.display = "none";
-  document.getElementById("show").disabled = false;
-  document.getElementById("next").disabled = true;
+function placeBoardChip(bet) {
+
+  var x = 0;
+
+  var y = 0;
+
+
+  var numberLeft = 142;
+
+  var colW = 82;
+
+  var top = 92;
+
+
+  /* STRAIGHT */
+
+  if (
+    bet.type === "straight"
+  ) {
+
+    var n = bet.n;
+
+
+    var col =
+      Math.floor(
+        (n - 1) / 3
+      );
+
+
+    var row =
+      2 -
+      ((n - 1) % 3);
+
+
+    x =
+      numberLeft +
+      col * colW +
+      12;
+
+
+    y =
+      top +
+      row * 100 +
+      21;
+
+  }
+
+
+  /* SPLIT */
+
+  if (
+    bet.type === "split"
+  ) {
+
+    if (
+      bet.orientation === "h"
+    ) {
+
+      x =
+        numberLeft +
+        bet.col * colW +
+        colW -
+        29;
+
+
+      y =
+        top +
+        bet.row * 100 +
+        71;
+
+    } else {
+
+      x =
+        numberLeft +
+        bet.col * colW +
+        12;
+
+
+      y =
+        top +
+        bet.row * 100 +
+        71;
+
+    }
+
+  }
+
+
+  /* STREET */
+
+  if (
+    bet.type === "street"
+  ) {
+
+    x =
+      numberLeft +
+      bet.col * colW +
+      12;
+
+
+    y =
+      top +
+      100 +
+      71;
+
+  }
+
+
+  /* CORNER */
+
+  if (
+    bet.type === "corner"
+  ) {
+
+    x =
+      numberLeft +
+      bet.col * colW +
+      colW -
+      29;
+
+
+    y =
+      top +
+      bet.row * 100 +
+      71;
+
+  }
+
+
+  /* SIX LINE */
+
+  if (
+    bet.type === "sixline"
+  ) {
+
+    x =
+      numberLeft +
+      bet.col * colW +
+      colW -
+      29;
+
+
+    y =
+      top +
+      200 +
+      71;
+
+  }
+
+
+  /* DOZEN */
+
+  if (
+    bet.type === "dozen"
+  ) {
+
+    x =
+      numberLeft +
+      (bet.dozen - 1) *
+      328 +
+      135;
+
+
+    y = 401;
+
+  }
+
+
+  /* COLUMN */
+
+  if (
+    bet.type === "column"
+  ) {
+
+    x = 1045;
+
+
+    y =
+      top +
+      (bet.column - 1) *
+      100 +
+      21;
+
+  }
+
+
+  /* OUTSIDE */
+
+  if (
+    bet.type === "outside"
+  ) {
+
+    var positions = {
+
+      low: 0,
+
+      even: 1,
+
+      red: 2,
+
+      black: 3,
+
+      odd: 4,
+
+      high: 5
+
+    };
+
+
+    x =
+      numberLeft +
+      positions[bet.outside] *
+      164 +
+      53;
+
+
+    y = 477;
+
+  }
+
+
+  addChip(
+    x,
+    y,
+    bet.count
+  );
+
 }
 
-function showAnswers() {
-  if (!round) return;
 
-  document.getElementById("answerList").innerHTML = round.map((b,i) =>
-    '<div class="answer"><span>Bet '+(i+1)+': '+fmt(b.stake)+' × '+b.mult+
-    ':1</span><b>'+fmt(b.payout)+'</b></div>'
-  ).join("");
+/* =========================================
+   NEW BOARD
+========================================= */
 
-  document.getElementById("total").textContent =
-    fmt(round.reduce((s,b) => s + b.payout, 0));
+function newBoardLayout() {
 
-  document.getElementById("answers").style.display = "block";
-  document.getElementById("show").disabled = true;
-  document.getElementById("next").disabled = false;
+  clearChips();
+
+
+  boardBets = [];
+
+  boardTotal = 0;
+
+
+  document
+    .getElementById("boardAnswer")
+    .value = "";
+
+
+  document
+    .getElementById("boardResult")
+    .textContent = "";
+
+
+  document
+    .getElementById("boardResult")
+    .className =
+    "result";
+
+
+  var used =
+    new Set();
+
+
+  var attempts = 0;
+
+
+  while (
+    boardBets.length < 5 &&
+    attempts < 200
+  ) {
+
+    attempts++;
+
+
+    var bet =
+      makeBoardBet();
+
+
+    var key =
+      boardBetKey(bet);
+
+
+    if (
+      used.has(key)
+    ) {
+
+      continue;
+
+    }
+
+
+    used.add(key);
+
+
+    boardBets.push(bet);
+
+
+    boardTotal +=
+      bet.count *
+      bet.mult;
+
+
+    placeBoardChip(bet);
+
+  }
+
 }
 
-window.addEventListener("load", function() {
-  document.getElementById("generate").onclick = generate;
-  document.getElementById("show").onclick = showAnswers;
-  document.getElementById("next").onclick = generate;
-  generate();
-});
+
+/* =========================================
+   CHECK BOARD ANSWER
+========================================= */
+
+document
+  .getElementById("checkBoard")
+  .onclick =
+  function() {
+
+    var input =
+      document.getElementById(
+        "boardAnswer"
+      );
+
+
+    var result =
+      document.getElementById(
+        "boardResult"
+      );
+
+
+    var value =
+      Number(input.value);
+
+
+    if (
+      input.value === ""
+    ) {
+
+      result.className =
+        "result bad";
+
+
+      result.textContent =
+        "Enter your total first.";
+
+
+      return;
+
+    }
+
+
+    if (
+      value === boardTotal
+    ) {
+
+      result.className =
+        "result good";
+
+
+      result.textContent =
+        "Correct — " +
+        boardTotal +
+        " pieces.";
+
+    } else {
+
+      result.className =
+        "result bad";
+
+
+      result.textContent =
+        "Not quite. Check your math and try again.";
+
+    }
+
+  };
+
+
+/* =========================================
+   NEW BOARD BUTTON
+========================================= */
+
+document
+  .getElementById("newLayout")
+  .onclick =
+  function() {
+
+    newBoardLayout();
+
+  };
+
+
+/* =========================================
+   START THE APP
+========================================= */
+
+generateDealerBets();
+
+newBoardLayout();
+
 </script>
+
 </body>
 </html>
