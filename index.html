@@ -67,7 +67,7 @@ function evenMoney(){
  return {type:x,label:x,mult:1};
 }
 function dozen(){const d=pick([1,2,3]);return {type:"Dozen",label:d+(d===1?"st":d===2?"nd":"rd")+" Dozen",mult:2};}
-function column(){const c=pick([1,2,3]);return {type:"Column",label:"Column "+c,mult:2;}
+function column(){const c=pick([1,2,3]);return {type:"Column",label:"Column "+c,mult:2,}
 
 }
 function makeBet(){
