@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Roulette Dealer Math Trainer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101010;color:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding:18px}
+.app{max-width:680px;margin:auto}.top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:16px}
+h1{font-size:25px;margin:0 0 5px}.muted{color:#aaa;font-size:14px;line-height:1.4}
+.card{background:#1c1c1e;border:1px solid #333;border-radius:17px;padding:18px}
+.bet{background:#29292b;border-radius:13px;padding:14px;margin:10px 0}.type{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.06em;font-weight:700}.value{font-size:20px;font-weight:700;margin-top:5px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+button{min-height:50px;border:0;border-radius:12px;font-size:16px;font-weight:700;padding:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.primary{background:#fff;color:#111}.secondary{background:#303033;color:#fff}.secondary:disabled{opacity:.4}
+.answer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #444;padding:10px 0;font-size:14px}.answer b{white-space:nowrap}.total{border-top:1px solid #555;padding-top:13px;margin-top:5px;display:flex;justify-content:space-between;font-size:19px;font-weight:800}
+.score{background:#29292b;border-radius:10px;padding:8px 11px;font-size:13px;white-space:nowrap}
+.note{margin-top:12px;font-size:12px;color:#888;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div><h1>Roulette Dealer Math</h1><div class="muted">Flash-card style dealer payout practice</div></div>
+<div class="score">Rounds: <span id="rounds">0</span></div>
+</div>
+<div class="card">
+<div id="bets" aria-live="polite"></div>
+<div id="answers" style="display:none">
+<h3 style="margin:18px 0 5px">Answers</h3>
+<div id="answerList"></div>
+<div class="total"><span>Total winnings</span><span id="total"></span></div>
+</div>
+<div class="actions">
+<button id="generate" class="primary">Generate Bets</button>
+<button id="show" class="secondary" disabled>Show Answers</button>
+<button id="next" class="secondary" disabled>Next Round</button>
+</div>
+<div class="note">Winnings only — the original wager is returned separately.</div>
+</div>
+</div>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const money=[5,10,15,20,25,50,100];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const fmt=n=>"$"+n.toLocaleString("en-CA");
+let round=null,roundCount=0;
+
+function straight(){return {type:"Straight Up",label:String(pick([...Array(37).keys()])),mult:35};}
+function split(){
+ const n=pick([...Array(36).keys()].slice(1));
+ const choices=[];
+ if(n<=35) choices.push(n+1); if(n>=2) choices.push(n-1);
+ return {type:"Split",label:n+"/"+pick(choices),mult:17};
+}
+function street(){const b=pick([1,4,7,10,13,16,19,22,25,28,31,34]);return {type:"Street",label:b+"-"+(b+1)+"-"+(b+2),mult:11};}
+function corner(){
+ const b=pick([1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32]);
+ return {type:"Corner",label:b+"/"+(b+1)+"/"+(b+3)+"/"+(b+4),mult:8};
+}
+function sixLine(){const b=pick([1,4,7,10,13,16,19,22,25,28,31]);return {type:"Six Line",label:b+"-"+(b+5),mult:5};}
+function evenMoney(){
+ const x=pick(["Red","Black","Odd","Even","1-18","19-36"]);
+ return {type:x,label:x,mult:1};
+}
+function dozen(){const d=pick([1,2,3]);return {type:"Dozen",label:d+(d===1?"st":d===2?"nd":"rd")+" Dozen",mult:2};}
+function column(){const c=pick([1,2,3]);return {type:"Column",label:"Column "+c,mult:2;}
+
+}
+function makeBet(){
+ const makers=[straight,split,street,corner,sixLine,evenMoney,dozen,column];
+ const b=pick(makers)(); b.stake=pick(money); b.payout=b.stake*b.mult; return b;
+}
+function generate(){
+ round=Array.from({length:pick([4,5,6,7])},makeBet);
+ roundCount++;
+ $("rounds").textContent=roundCount;
+ $("bets").innerHTML=round.map((b,i)=>'<div class="bet"><div class="type">Bet '+(i+1)+" · "+b.type+'</div><div class="value">'+b.label+" — "+fmt(b.stake)+"</div></div>").join("");
+ $("answers").style.display="none";
+ $("show").disabled=false;$("next").disabled=true;
+}
+function showAnswers(){
+ if(!round)return;
+ $("answerList").innerHTML=round.map((b,i)=>'<div class="answer"><span>Bet '+(i+1)+": "+fmt(b.stake)+" × "+b.mult+":1</span><b>"+fmt(b.payout)+"</b></div>").join("");
+ $("total").textContent=fmt(round.reduce((s,b)=>s+b.payout,0));
+ $("answers").style.display="block";
+ $("show").disabled=true;$("next").disabled=false;
+}
+$("generate").addEventListener("click",generate);
+$("show").addEventListener("click",showAnswers);
+$("next").addEventListener("click",generate);
+generate();
+})();
+</script>
+</body>
+</html>
