@@ -41,59 +41,101 @@ button{min-height:50px;border:0;border-radius:12px;font-size:16px;font-weight:70
 </div>
 </div>
 <script>
-(function(){
 "use strict";
-const $=id=>document.getElementById(id);
-const money=[5,10,15,20,25,50,100];
-const pick=a=>a[Math.floor(Math.random()*a.length)];
-const fmt=n=>"$"+n.toLocaleString("en-CA");
-let round=null,roundCount=0;
 
-function straight(){return {type:"Straight Up",label:String(pick([...Array(37).keys()])),mult:35};}
-function split(){
- const n=pick([...Array(36).keys()].slice(1));
- const choices=[];
- if(n<=35) choices.push(n+1); if(n>=2) choices.push(n-1);
- return {type:"Split",label:n+"/"+pick(choices),mult:17};
-}
-function street(){const b=pick([1,4,7,10,13,16,19,22,25,28,31,34]);return {type:"Street",label:b+"-"+(b+1)+"-"+(b+2),mult:11};}
-function corner(){
- const b=pick([1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32]);
- return {type:"Corner",label:b+"/"+(b+1)+"/"+(b+3)+"/"+(b+4),mult:8};
-}
-function sixLine(){const b=pick([1,4,7,10,13,16,19,22,25,28,31]);return {type:"Six Line",label:b+"-"+(b+5),mult:5};}
-function evenMoney(){
- const x=pick(["Red","Black","Odd","Even","1-18","19-36"]);
- return {type:x,label:x,mult:1};
-}
-function dozen(){const d=pick([1,2,3]);return {type:"Dozen",label:d+(d===1?"st":d===2?"nd":"rd")+" Dozen",mult:2};}
-function column(){const c=pick([1,2,3]);return {type:"Column",label:"Column "+c,mult:2,}
+const money = [5,10,15,20,25,50,100];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const fmt = n => "$" + n.toLocaleString("en-CA");
+let round = null;
+let roundCount = 0;
 
+function straight() {
+  return {type:"Straight Up", label:String(pick([...Array(37).keys()])), mult:35};
 }
-function makeBet(){
- const makers=[straight,split,street,corner,sixLine,evenMoney,dozen,column];
- const b=pick(makers)(); b.stake=pick(money); b.payout=b.stake*b.mult; return b;
+
+function split() {
+  const n = pick([...Array(36).keys()].slice(1));
+  const choices = [];
+  if (n <= 35) choices.push(n + 1);
+  if (n >= 2) choices.push(n - 1);
+  return {type:"Split", label:n + "/" + pick(choices), mult:17};
 }
-function generate(){
- round=Array.from({length:pick([4,5,6,7])},makeBet);
- roundCount++;
- $("rounds").textContent=roundCount;
- $("bets").innerHTML=round.map((b,i)=>'<div class="bet"><div class="type">Bet '+(i+1)+" · "+b.type+'</div><div class="value">'+b.label+" — "+fmt(b.stake)+"</div></div>").join("");
- $("answers").style.display="none";
- $("show").disabled=false;$("next").disabled=true;
+
+function street() {
+  const b = pick([1,4,7,10,13,16,19,22,25,28,31,34]);
+  return {type:"Street", label:b+"-"+(b+1)+"-"+(b+2), mult:11};
 }
-function showAnswers(){
- if(!round)return;
- $("answerList").innerHTML=round.map((b,i)=>'<div class="answer"><span>Bet '+(i+1)+": "+fmt(b.stake)+" × "+b.mult+":1</span><b>"+fmt(b.payout)+"</b></div>").join("");
- $("total").textContent=fmt(round.reduce((s,b)=>s+b.payout,0));
- $("answers").style.display="block";
- $("show").disabled=true;$("next").disabled=false;
+
+function corner() {
+  const b = pick([1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32]);
+  return {type:"Corner", label:b+"/"+(b+1)+"/"+(b+3)+"/"+(b+4), mult:8};
 }
-$("generate").addEventListener("click",generate);
-$("show").addEventListener("click",showAnswers);
-$("next").addEventListener("click",generate);
-generate();
-})();
+
+function sixLine() {
+  const b = pick([1,4,7,10,13,16,19,22,25,28,31]);
+  return {type:"Six Line", label:b+"-"+(b+5), mult:5};
+}
+
+function evenMoney() {
+  const x = pick(["Red","Black","Odd","Even","1-18","19-36"]);
+  return {type:x, label:x, mult:1};
+}
+
+function dozen() {
+  const d = pick([1,2,3]);
+  return {type:"Dozen", label:d+(d===1?"st":d===2?"nd":"rd")+" Dozen", mult:2};
+}
+
+function column() {
+  const c = pick([1,2,3]);
+  return {type:"Column", label:"Column "+c, mult:2};
+}
+
+function makeBet() {
+  const makers = [straight,split,street,corner,sixLine,evenMoney,dozen,column];
+  const b = pick(makers)();
+  b.stake = pick(money);
+  b.payout = b.stake * b.mult;
+  return b;
+}
+
+function generate() {
+  round = Array.from({length:pick([4,5,6,7])}, makeBet);
+  roundCount++;
+
+  document.getElementById("rounds").textContent = roundCount;
+  document.getElementById("bets").innerHTML = round.map((b,i) =>
+    '<div class="bet"><div class="type">Bet '+(i+1)+' · '+b.type+
+    '</div><div class="value">'+b.label+' — '+fmt(b.stake)+'</div></div>'
+  ).join("");
+
+  document.getElementById("answers").style.display = "none";
+  document.getElementById("show").disabled = false;
+  document.getElementById("next").disabled = true;
+}
+
+function showAnswers() {
+  if (!round) return;
+
+  document.getElementById("answerList").innerHTML = round.map((b,i) =>
+    '<div class="answer"><span>Bet '+(i+1)+': '+fmt(b.stake)+' × '+b.mult+
+    ':1</span><b>'+fmt(b.payout)+'</b></div>'
+  ).join("");
+
+  document.getElementById("total").textContent =
+    fmt(round.reduce((s,b) => s + b.payout, 0));
+
+  document.getElementById("answers").style.display = "block";
+  document.getElementById("show").disabled = true;
+  document.getElementById("next").disabled = false;
+}
+
+window.addEventListener("load", function() {
+  document.getElementById("generate").onclick = generate;
+  document.getElementById("show").onclick = showAnswers;
+  document.getElementById("next").onclick = generate;
+  generate();
+});
 </script>
 </body>
 </html>
