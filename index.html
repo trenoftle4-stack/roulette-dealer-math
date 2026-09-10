@@ -1930,4 +1930,569 @@ function basePoint(b){
    WINNER HIGHLIGHT
 ========================= */
 
-function
+function placeWinner(){
+
+  var el=
+    document.querySelector(
+      '.cell.number[data-number="'+
+      winningNumber+
+      '"]'
+    )
+
+
+  if(!el)
+    return
+
+
+  var r=
+    el.getBoundingClientRect()
+
+
+  var br=
+    document
+      .getElementById("board")
+      .getBoundingClientRect()
+
+
+  var w=
+    document.createElement(
+      "div"
+    )
+
+
+  w.className="winner"
+
+
+  w.style.left=
+    (
+      r.left-
+      br.left
+    )+
+    "px"
+
+
+  w.style.top=
+    (
+      r.top-
+      br.top
+    )+
+    "px"
+
+
+  w.style.width=
+    r.width+
+    "px"
+
+
+  w.style.height=
+    r.height+
+    "px"
+
+
+  document
+    .getElementById("board")
+    .appendChild(w)
+
+}
+
+
+/* =========================
+   PLACE CHIPS
+========================= */
+
+function placeChips(){
+
+  var br=
+    document
+      .getElementById("board")
+      .getBoundingClientRect()
+
+
+  var offsets=[
+    [0,-.045],
+    [-.045,0],
+    [.045,0],
+    [0,.045],
+    [-.035,.035]
+  ]
+
+
+  boardBets.forEach(
+    function(b,i){
+
+      var p=
+        basePoint(b)
+
+
+      if(!p)
+        return
+
+
+      var dx=
+        br.width*
+        offsets[i][0]
+
+
+      var dy=
+        br.height*
+        offsets[i][1]
+
+
+      addChipXY(
+        p.x+dx,
+        p.y+dy,
+        b.count,
+        i
+      )
+
+    }
+  )
+
+}
+
+
+/* =========================
+   BREAKDOWN
+========================= */
+
+function renderBreakdown(){
+
+  var box=
+    document.getElementById(
+      "breakdown"
+    )
+
+
+  box.innerHTML=
+    '<div class="breakdown-row breakdown-head">'+
+      '<div>Bet</div>'+
+      '<div>Chips</div>'+
+      '<div>Odds</div>'+
+      '<div>Winnings</div>'+
+    '</div>'
+
+
+  boardBets.forEach(
+    function(b){
+
+      var d=
+        document.createElement(
+          "div"
+        )
+
+
+      d.className=
+        "breakdown-row"
+
+
+      d.innerHTML=
+        "<div>"+
+        b.desc+
+        "</div>"+
+
+        "<div>"+
+        b.count+
+        "</div>"+
+
+        "<div>"+
+        b.mult+
+        " to 1"+
+        "</div>"+
+
+        "<div>"+
+        (
+          b.count*
+          b.mult
+        )+
+        "</div>"
+
+
+      box.appendChild(d)
+
+    }
+  )
+
+
+  var total=
+    document.createElement(
+      "div"
+    )
+
+
+  total.className=
+    "breakdown-row"
+
+
+  total.innerHTML=
+    '<div><b>Total</b></div>'+
+    '<div></div>'+
+    '<div></div>'+
+    '<div><b>'+
+    boardTotal+
+    '</b></div>'
+
+
+  box.appendChild(total)
+
+}
+
+
+/* =========================
+   NEW BOARD
+========================= */
+
+function newBoardLayout(){
+
+  clearChips()
+
+  boardBets=[]
+
+  boardTotal=0
+
+
+  document
+    .getElementById(
+      "boardAnswer"
+    )
+    .value=""
+
+
+  document
+    .getElementById(
+      "boardResult"
+    )
+    .textContent=""
+
+
+  document
+    .getElementById(
+      "boardResult"
+    )
+    .className="result"
+
+
+  document
+    .getElementById(
+      "breakdown"
+    )
+    .className="breakdown"
+
+
+  /* Winning number:
+     1 through 25 only */
+
+  winningNumber=
+    pick(
+      Array.from(
+        {length:25},
+        function(_,i){
+          return i+1
+        }
+      )
+    )
+
+
+  var candidates=
+    shuffle(
+      insideCandidates(
+        winningNumber
+      )
+    )
+
+
+  /* Prefer different bet types */
+
+  var preferred=[
+    "straight",
+    "split",
+    "street",
+    "corner",
+    "sixline"
+  ]
+
+
+  for(
+    var p=0;
+    p<preferred.length;
+    p++
+  ){
+
+    var found=
+      candidates.find(
+        function(b){
+
+          return(
+            b.type===
+              preferred[p] &&
+
+            !boardBets.some(
+              function(x){
+                return(
+                  key(x)===
+                  key(b)
+                )
+              }
+            )
+          )
+
+        }
+      )
+
+
+    if(found)
+      boardBets.push(found)
+
+  }
+
+
+  /* Fill remaining spots */
+
+  for(
+    var i=0;
+
+    i<candidates.length &&
+    boardBets.length<6;
+
+    i++
+  ){
+
+    if(
+      !boardBets.some(
+        function(x){
+          return(
+            key(x)===
+            key(candidates[i])
+          )
+        }
+      )
+    ){
+
+      boardBets.push(
+        candidates[i]
+      )
+
+    }
+
+  }
+
+
+  boardBets=
+    boardBets.slice(0,6)
+
+
+  /* Random chip counts.
+     Maximum is 25. */
+
+  boardBets.forEach(
+    function(b){
+
+      b.count=
+        pick([
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          12,
+          15,
+          18,
+          20,
+          22,
+          25
+        ])
+
+
+      boardTotal+=
+        b.count*
+        b.mult
+
+    }
+  )
+
+
+  /* Wait until board has rendered */
+
+  requestAnimationFrame(
+    function(){
+
+      placeWinner()
+
+      placeChips()
+
+    }
+  )
+
+}
+
+
+/* =========================
+   CHECK ANSWER
+========================= */
+
+document
+  .getElementById(
+    "checkBoard"
+  )
+  .onclick=
+  function(){
+
+    var input=
+      document.getElementById(
+        "boardAnswer"
+      )
+
+
+    var res=
+      document.getElementById(
+        "boardResult"
+      )
+
+
+    var v=
+      Number(
+        input.value
+      )
+
+
+    if(
+      input.value===""
+    ){
+
+      res.className=
+        "result bad"
+
+      res.textContent=
+        "Enter your total first."
+
+      return
+
+    }
+
+
+    if(
+      v===boardTotal
+    ){
+
+      res.className=
+        "result good"
+
+      res.textContent=
+        "Correct — "+
+        boardTotal+
+        " pieces."
+
+    }
+    else{
+
+      res.className=
+        "result bad"
+
+      res.textContent=
+        "Not quite. Try again."
+
+    }
+
+  }
+
+
+/* =========================
+   SHOW ANSWER
+========================= */
+
+document
+  .getElementById(
+    "showBoardAnswer"
+  )
+  .onclick=
+  function(){
+
+    var res=
+      document.getElementById(
+        "boardResult"
+      )
+
+
+    res.className=
+      "result good"
+
+
+    res.textContent=
+      "Winning Number: "+
+      winningNumber+
+      " — Answer: "+
+      boardTotal+
+      " pieces."
+
+
+    renderBreakdown()
+
+
+    document
+      .getElementById(
+        "breakdown"
+      )
+      .classList.add(
+        "show"
+      )
+
+  }
+
+
+/* =========================
+   NEW LAYOUT BUTTON
+========================= */
+
+document
+  .getElementById(
+    "newLayout"
+  )
+  .onclick=
+    newBoardLayout
+
+
+/* =========================
+   INITIAL ROUNDS
+========================= */
+
+generateDealerBets()
+
+newBoardLayout()
+
+
+/* =========================
+   IPHONE ROTATION / RESIZE
+========================= */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    if(
+      boardBets.length
+    ){
+
+      clearChips()
+
+
+      requestAnimationFrame(
+        function(){
+
+          placeWinner()
+
+          placeChips()
+
+        }
+      )
+
+    }
+
+  }
+)
+
+</script>
+
+</body>
+</html>
