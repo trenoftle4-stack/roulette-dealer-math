@@ -9,809 +9,720 @@
 *{box-sizing:border-box}
 
 body{
-  margin:0;
-  background:#07111b;
-  color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+margin:0;
+background:#07111b;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
 
 .app{
-  width:min(100%,900px);
-  margin:auto;
-  padding:10px
+width:min(100%,900px);
+margin:auto;
+padding:10px
 }
 
 header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:6px 0 14px
+display:flex;
+align-items:center;
+gap:12px;
+margin:6px 0 14px
 }
 
-.logo{
-  font-size:38px;
-  flex:none
-}
+.logo{font-size:38px;flex:none}
 
 h1{
-  margin:0;
-  font-size:clamp(28px,7vw,44px);
-  line-height:1.04
+margin:0;
+font-size:clamp(28px,7vw,44px);
+line-height:1.04
 }
 
 .subtitle{
-  color:#b9c9da;
-  font-size:15px;
-  margin-top:6px
+color:#b9c9da;
+font-size:15px;
+margin-top:6px
 }
 
 .tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:10px
+display:flex;
+gap:8px;
+margin-bottom:10px
 }
 
 .tab{
-  flex:1;
-  border:1px solid #3c536b;
-  border-radius:12px;
-  padding:15px 8px;
-  background:#16283a;
-  color:#fff;
-  font-size:18px;
-  font-weight:900
+flex:1;
+border:1px solid #3c536b;
+border-radius:12px;
+padding:15px 8px;
+background:#16283a;
+color:#fff;
+font-size:18px;
+font-weight:900
 }
 
 .tab.active{
-  background:#08a851;
-  border-color:#18dc70
+background:#08a851;
+border-color:#18dc70
 }
 
-.panel{
-  display:none
-}
-
-.panel.active{
-  display:block
-}
+.panel{display:none}
+.panel.active{display:block}
 
 .card{
-  background:#0d1b28;
-  border:1px solid #30485e;
-  border-radius:14px;
-  padding:14px;
-  margin-top:10px
+background:#0d1b28;
+border:1px solid #30485e;
+border-radius:14px;
+padding:14px;
+margin-top:10px
 }
 
 .card h2,.card h3{
-  margin:0 0 12px
+margin:0 0 12px
 }
 
 .card p{
-  color:#c4d3e1;
-  font-size:16px;
-  line-height:1.4
+color:#c4d3e1;
+font-size:16px;
+line-height:1.4
 }
 
 .bet{
-  padding:11px 0;
-  border-bottom:1px solid #2d4053
+padding:11px 0;
+border-bottom:1px solid #2d4053
 }
 
-.bet:last-child{
-  border-bottom:0
-}
+.bet:last-child{border-bottom:0}
 
 .answer{
-  color:#72f1a5;
-  font-weight:800;
-  margin-top:4px
+color:#72f1a5;
+font-weight:800;
+margin-top:4px
 }
 
 button{
-  width:100%;
-  border:0;
-  border-radius:11px;
-  padding:15px;
-  margin-top:9px;
-  font-size:18px;
-  font-weight:900;
-  color:#fff;
-  background:#304c68
+width:100%;
+border:0;
+border-radius:11px;
+padding:15px;
+margin-top:9px;
+font-size:18px;
+font-weight:900;
+color:#fff;
+background:#304c68
 }
 
-button.primary{
-  background:#08b957
-}
+button.primary{background:#08b957}
 
 input{
-  width:100%;
-  padding:15px;
-  border-radius:10px;
-  border:1px solid #48627a;
-  background:#14283a;
-  color:#fff;
-  font-size:20px
+width:100%;
+padding:15px;
+border-radius:10px;
+border:1px solid #48627a;
+background:#14283a;
+color:#fff;
+font-size:20px
 }
 
 .result{
-  min-height:24px;
-  margin-top:10px;
-  font-weight:900
+min-height:24px;
+margin-top:10px;
+font-weight:900
 }
 
-.good{
-  color:#67f19b
-}
-
-.bad{
-  color:#ff7373
-}
+.good{color:#67f19b}
+.bad{color:#ff7373}
 
 
-/* =========================
-   ROULETTE BOARD
-========================= */
+/* BOARD */
 
 .board-wrap{
-  width:100%;
-  overflow:hidden
+width:100%;
+overflow:hidden
 }
 
 .board{
-  position:relative;
-  width:100%;
-  aspect-ratio:1.58/1;
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      #08753b 0%,
-      #045d2d 58%,
-      #034b25 100%
-    );
-  border:8px solid #613718;
-  border-radius:18px;
-  box-shadow:
-    inset 0 0 0 3px #9b6236,
-    0 8px 22px #0009;
-  overflow:hidden
+position:relative;
+width:100%;
+aspect-ratio:1.58/1;
+background:radial-gradient(
+circle at 50% 45%,
+#08753b 0%,
+#045d2d 58%,
+#034b25 100%
+);
+border:8px solid #613718;
+border-radius:18px;
+box-shadow:
+inset 0 0 0 3px #9b6236,
+0 8px 22px #0009;
+overflow:hidden
 }
 
 .board-title{
-  position:absolute;
-  left:3%;
-  top:3.5%;
-  font-size:clamp(13px,3vw,27px);
-  font-weight:900
+position:absolute;
+left:3%;
+top:3.5%;
+font-size:clamp(13px,3vw,27px);
+font-weight:900
 }
 
 .board-sub{
-  position:absolute;
-  right:3%;
-  top:3.5%;
-  text-align:right;
-  color:#dce9f5;
-  font-size:clamp(7px,1.55vw,14px);
-  line-height:1.25
+position:absolute;
+right:3%;
+top:3.5%;
+text-align:right;
+color:#dce9f5;
+font-size:clamp(7px,1.55vw,14px);
+line-height:1.25
 }
 
 .roulette-grid{
-  position:absolute;
-  left:4.5%;
-  right:4.5%;
-  top:18%;
-  height:42%;
-  display:grid;
-  grid-template-columns:
-    6.5%
-    repeat(12,minmax(0,1fr))
-    6.5%;
-  grid-template-rows:repeat(3,1fr)
+position:absolute;
+left:4.5%;
+right:4.5%;
+top:18%;
+height:42%;
+display:grid;
+grid-template-columns:
+6.5%
+repeat(12,minmax(0,1fr))
+6.5%;
+grid-template-rows:repeat(3,1fr)
 }
 
 .cell{
-  border:1px solid rgba(255,255,255,.95);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  font-weight:900;
-  min-width:0;
-  min-height:0
+border:1px solid rgba(255,255,255,.95);
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+font-weight:900;
+min-width:0;
+min-height:0
 }
 
 .zero{
-  grid-column:1;
-  grid-row:1/3;
-  background:#08733a;
-  font-size:clamp(10px,3vw,25px)
+grid-column:1;
+grid-row:1/3;
+background:#08733a;
+font-size:clamp(10px,3vw,25px)
 }
 
 .zero0{
-  grid-column:1;
-  grid-row:3;
-  background:#08733a;
-  font-size:clamp(10px,3vw,25px)
+grid-column:1;
+grid-row:3;
+background:#08733a;
+font-size:clamp(10px,3vw,25px)
 }
 
 .number{
-  font-size:clamp(10px,3vw,25px)
+font-size:clamp(10px,3vw,25px)
 }
 
-.number.red{
-  background:#d3262d
-}
-
-.number.black{
-  background:#111519
-}
+.number.red{background:#d3262d}
+.number.black{background:#111519}
 
 .twoto1{
-  font-size:clamp(7px,1.7vw,17px);
-  background:#08733a;
-  text-align:center;
-  line-height:1.05
+font-size:clamp(7px,1.7vw,17px);
+background:#08733a;
+text-align:center;
+line-height:1.05
 }
 
 .dozens{
-  position:absolute;
-  left:10.5%;
-  right:10.5%;
-  top:60%;
-  height:10%;
-  display:grid;
-  grid-template-columns:repeat(3,1fr)
+position:absolute;
+left:10.5%;
+right:10.5%;
+top:60%;
+height:10%;
+display:grid;
+grid-template-columns:repeat(3,1fr)
 }
 
 .outside{
-  position:absolute;
-  left:10.5%;
-  right:10.5%;
-  top:70%;
-  height:10%;
-  display:grid;
-  grid-template-columns:repeat(6,1fr)
+position:absolute;
+left:10.5%;
+right:10.5%;
+top:70%;
+height:10%;
+display:grid;
+grid-template-columns:repeat(6,1fr)
 }
 
 .betbox{
-  border:1px solid rgba(255,255,255,.95);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:clamp(7px,1.9vw,18px);
-  text-align:center
+border:1px solid rgba(255,255,255,.95);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:clamp(7px,1.9vw,18px);
+text-align:center
 }
 
 .red-box{
-  background:rgba(190,20,30,.28)
+background:rgba(190,20,30,.28)
 }
 
 .black-box{
-  background:rgba(0,0,0,.22)
+background:rgba(0,0,0,.22)
 }
 
 
-/* =========================
-   ROULETTE CHIPS
-========================= */
+/* ROULETTE CHIPS */
 
 .chip{
-  position:absolute;
+position:absolute;
+width:clamp(34px,6.4vw,58px);
+height:clamp(34px,6.4vw,58px);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:clamp(10px,1.8vw,18px);
+font-weight:950;
+color:#111;
 
-  width:clamp(34px,6.4vw,58px);
-  height:clamp(34px,6.4vw,58px);
+background:
+radial-gradient(
+circle,
+#fff 0 43%,
+transparent 44%
+),
+var(--chip);
 
-  border-radius:50%;
+border:2px solid #f7f7f7;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+box-shadow:
+0 3px 5px #000b,
+0 0 0 2px #222;
 
-  font-size:clamp(10px,1.8vw,18px);
-  font-weight:950;
+z-index:20;
 
-  color:#111;
-
-  background:
-    radial-gradient(
-      circle,
-      #fff 0 43%,
-      transparent 44%
-    ),
-    var(--chip);
-
-  border:2px solid #f7f7f7;
-
-  box-shadow:
-    0 3px 5px #000b,
-    0 0 0 2px #222;
-
-  z-index:20;
-
-  transform:translate(-50%,-50%)
+transform:translate(-50%,-50%)
 }
 
 .chip:before{
-  content:"";
-  position:absolute;
-  inset:5%;
-  border-radius:50%;
+content:"";
+position:absolute;
+inset:5%;
+border-radius:50%;
 
-  background:
-    repeating-conic-gradient(
-      from 0deg,
-      #fff 0deg 8deg,
-      transparent 8deg 24deg
-    );
+background:
+repeating-conic-gradient(
+from 0deg,
+#fff 0deg 8deg,
+transparent 8deg 24deg
+);
 
-  -webkit-mask:
-    radial-gradient(
-      circle,
-      transparent 0 60%,
-      #000 61%
-    );
+-webkit-mask:
+radial-gradient(
+circle,
+transparent 0 60%,
+#000 61%
+);
 
-  mask:
-    radial-gradient(
-      circle,
-      transparent 0 60%,
-      #000 61%
-    );
+mask:
+radial-gradient(
+circle,
+transparent 0 60%,
+#000 61%
+);
 
-  opacity:.95
+opacity:.95
 }
 
 .chip:after{
-  content:"";
-  position:absolute;
-  inset:15%;
+content:"";
+position:absolute;
+inset:15%;
 
-  border:2px solid color-mix(
-    in srgb,
-    var(--chip) 72%,
-    #000
-  );
+border:2px solid color-mix(
+in srgb,
+var(--chip) 72%,
+#000
+);
 
-  border-radius:50%;
+border-radius:50%;
 
-  box-shadow:
-    inset 0 0 0 1px #fff
+box-shadow:
+inset 0 0 0 1px #fff
 }
 
 .chip span{
-  position:relative;
-  z-index:2;
-
-  color:var(--chip);
-
-  text-shadow:
-    0 1px 0 #fff
+position:relative;
+z-index:2;
+color:var(--chip);
+text-shadow:0 1px 0 #fff
 }
 
 
-/* Chip colors */
+/* CHIP COLORS */
 
-.chip.c0{
-  --chip:#e11d8f
-}
-
-.chip.c1{
-  --chip:#2f7de1
-}
-
-.chip.c2{
-  --chip:#f0a91b
-}
-
-.chip.c3{
-  --chip:#28a84a
-}
-
-.chip.c4{
-  --chip:#7b35d8
-}
-
-.chip.c5{
-  --chip:#e33a31
-}
+.chip.c0{--chip:#e11d8f}
+.chip.c1{--chip:#2f7de1}
+.chip.c2{--chip:#f0a91b}
+.chip.c3{--chip:#28a84a}
+.chip.c4{--chip:#7b35d8}
+.chip.c5{--chip:#e33a31}
 
 
-/* Winning number highlight */
+/* WINNING NUMBER */
 
 .winner{
-  position:absolute;
-  z-index:5;
-
-  border:3px solid #ffe25a;
-
-  box-shadow:
-    0 0 0 2px #000,
-    0 0 12px #ffe25a88;
-
-  pointer-events:none
+position:absolute;
+z-index:5;
+border:3px solid #ffe25a;
+box-shadow:
+0 0 0 2px #000,
+0 0 12px #ffe25a88;
+pointer-events:none
 }
 
 .legend{
-  text-align:center;
-  color:#c9d8e5;
-  font-size:13px;
-  margin-top:7px
+text-align:center;
+color:#c9d8e5;
+font-size:13px;
+margin-top:7px
 }
 
 .refgrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px 20px;
-  color:#d5e2ed;
-  font-size:13px
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px 20px;
+color:#d5e2ed;
+font-size:13px
 }
 
 
-/* =========================
-   BREAKDOWN
-========================= */
+/* BREAKDOWN */
 
 .breakdown{
-  margin-top:12px;
-  border:1px solid #30485e;
-  border-radius:10px;
-  overflow:hidden;
-  display:none
+margin-top:12px;
+border:1px solid #30485e;
+border-radius:10px;
+overflow:hidden;
+display:none
 }
 
-.breakdown.show{
-  display:block
-}
+.breakdown.show{display:block}
 
 .breakdown-row{
-  display:grid;
-  grid-template-columns:
-    1.25fr
-    .8fr
-    .55fr
-    .8fr;
-
-  border-bottom:1px solid #27394a;
-  font-size:12px
+display:grid;
+grid-template-columns:
+1.25fr
+.8fr
+.55fr
+.8fr;
+border-bottom:1px solid #27394a;
+font-size:12px
 }
 
 .breakdown-row:last-child{
-  border-bottom:0
+border-bottom:0
 }
 
 .breakdown-row>div{
-  padding:7px;
-  border-right:1px solid #27394a
+padding:7px;
+border-right:1px solid #27394a
 }
 
 .breakdown-row>div:last-child{
-  border-right:0
+border-right:0
 }
 
 .breakdown-head{
-  font-weight:900;
-  background:#142638
+font-weight:900;
+background:#142638
 }
 
 
-/* =========================
-   IPHONE
-========================= */
+/* IPHONE */
 
 @media(max-width:600px){
 
-  .app{
-    padding:8px
-  }
+.app{padding:8px}
 
-  .logo{
-    font-size:34px
-  }
+.logo{font-size:34px}
 
-  .subtitle{
-    font-size:13px
-  }
+.subtitle{font-size:13px}
 
-  .card{
-    padding:12px
-  }
+.card{padding:12px}
 
-  .card p{
-    font-size:14px
-  }
+.card p{font-size:14px}
 
-  .tab{
-    font-size:16px;
-    padding:14px 6px
-  }
+.tab{
+font-size:16px;
+padding:14px 6px
+}
 
-  .board{
-    border-width:7px
-  }
+.board{border-width:7px}
 
-  .breakdown-row{
-    font-size:11px
-  }
+.breakdown-row{
+font-size:11px
+}
+
 }
 
 </style>
 </head>
-
 
 <body>
 
 <div class="app">
 
 <header>
-  <div class="logo">🎰</div>
+<div class="logo">🎰</div>
 
-  <div>
-    <h1>Roulette Dealer Math Trainer</h1>
+<div>
+<h1>Roulette Dealer Math Trainer</h1>
 
-    <div class="subtitle">
-      Real Layout. Real Speed. Practice the payout math.
-    </div>
-  </div>
+<div class="subtitle">
+Real Layout. Real Speed. Practice the payout math.
+</div>
+</div>
 </header>
 
 
-<!-- =========================
-     TABS
-========================= -->
-
 <div class="tabs">
 
-  <button
-    class="tab active"
-    id="dealerTab">
-    Dealer Math
-  </button>
+<button
+class="tab active"
+id="dealerTab">
+Dealer Math
+</button>
 
-  <button
-    class="tab"
-    id="boardTab">
-    Board Math
-  </button>
+<button
+class="tab"
+id="boardTab">
+Board Math
+</button>
 
 </div>
 
 
-<!-- =========================
-     SECTION 1
-========================= -->
+<!-- SECTION 1 -->
 
 <section
-  id="dealerPanel"
-  class="panel active">
+id="dealerPanel"
+class="panel active">
 
-  <div class="card">
+<div class="card">
 
-    <h2>
-      Section 1: Dealer Math
-    </h2>
+<h2>
+Section 1: Dealer Math
+</h2>
 
-    <p>
-      Identify each bet and calculate the winnings only.
-      The original wager is not included.
-    </p>
+<p>
+Identify each bet and calculate the winnings only.
+The original wager is not included.
+</p>
 
-    <div id="dealerBets"></div>
+<div id="dealerBets"></div>
 
-    <button
-      class="primary"
-      id="generateBets">
-      Generate Bets
-    </button>
+<button
+class="primary"
+id="generateBets">
+Generate Bets
+</button>
 
-    <button id="showAnswers">
-      Show Answers
-    </button>
+<button id="showAnswers">
+Show Answers
+</button>
 
-    <button id="nextRound">
-      Next Round
-    </button>
+<button id="nextRound">
+Next Round
+</button>
 
-    <div
-      id="dealerStatus"
-      class="result">
-    </div>
+<div
+id="dealerStatus"
+class="result">
+</div>
 
-  </div>
+</div>
 
 </section>
 
 
-<!-- =========================
-     SECTION 2
-========================= -->
+<!-- SECTION 2 -->
 
 <section
-  id="boardPanel"
-  class="panel">
+id="boardPanel"
+class="panel">
 
-  <div class="card">
+<div class="card">
 
-    <h2>
-      Section 2: Board Math
-    </h2>
+<h2>
+Section 2: Board Math
+</h2>
 
-    <p>
-      <b>One winning number.</b>
-      Multiple inside bets can win on that number.
-      Look at the numbered chips and calculate the total payout
-      from the bets that cover the winning number.
-      <b>Outside bets are shown but are not included.</b>
-    </p>
-
-
-    <!-- BOARD -->
-
-    <div class="board-wrap">
-
-      <div
-        class="board"
-        id="board">
-
-        <div class="board-title">
-          How Many Pieces Do I Pay?
-        </div>
-
-        <div class="board-sub">
-          One winning number.<br>
-          Multiple bets can win.<br>
-          Outside bets are not used.
-        </div>
+<p>
+<b>One winning number.</b>
+Multiple inside bets can win on that number.
+Look at the numbered chips and calculate the total payout
+from the bets that cover the winning number.
+<b>Outside bets are shown but are not included.</b>
+</p>
 
 
-        <div
-          class="roulette-grid"
-          id="rouletteGrid">
-        </div>
+<div class="board-wrap">
+
+<div
+class="board"
+id="board">
+
+<div class="board-title">
+How Many Pieces Do I Pay?
+</div>
+
+<div class="board-sub">
+One winning number.<br>
+Multiple bets can win.<br>
+Outside bets are not used.
+</div>
+
+<div
+class="roulette-grid"
+id="rouletteGrid">
+</div>
 
 
-        <!-- DOZENS -->
+<div class="dozens">
 
-        <div class="dozens">
+<div class="betbox">
+1st 12
+</div>
 
-          <div class="betbox">
-            1st 12
-          </div>
+<div class="betbox">
+2nd 12
+</div>
 
-          <div class="betbox">
-            2nd 12
-          </div>
+<div class="betbox">
+3rd 12
+</div>
 
-          <div class="betbox">
-            3rd 12
-          </div>
-
-        </div>
+</div>
 
 
-        <!-- OUTSIDE BETS -->
+<div class="outside">
 
-        <div class="outside">
+<div class="betbox">
+1 to 18
+</div>
 
-          <div class="betbox">
-            1 to 18
-          </div>
+<div class="betbox">
+EVEN
+</div>
 
-          <div class="betbox">
-            EVEN
-          </div>
+<div class="betbox red-box">
+RED
+</div>
 
-          <div class="betbox red-box">
-            RED
-          </div>
+<div class="betbox black-box">
+BLACK
+</div>
 
-          <div class="betbox black-box">
-            BLACK
-          </div>
+<div class="betbox">
+ODD
+</div>
 
-          <div class="betbox">
-            ODD
-          </div>
+<div class="betbox">
+19 to 36
+</div>
 
-          <div class="betbox">
-            19 to 36
-          </div>
+</div>
 
-        </div>
+</div>
 
-      </div>
-
-    </div>
+</div>
 
 
-    <div class="legend">
-      Chip number = number of pieces wagered.
-      Chip color has no meaning.
-    </div>
+<div class="legend">
+Chip number = number of pieces wagered.
+Chip color has no meaning.
+</div>
 
-  </div>
-
-
-  <!-- ANSWER AREA -->
-
-  <div class="card">
-
-    <h3>
-      How many pieces do you pay out?
-    </h3>
-
-    <input
-      id="boardAnswer"
-      type="number"
-      inputmode="numeric"
-      min="0"
-      placeholder="Enter total pieces..."
-    >
-
-    <button
-      class="primary"
-      id="checkBoard">
-      Check Answer
-    </button>
-
-    <button id="showBoardAnswer">
-      Show Answer
-    </button>
-
-    <button id="newLayout">
-      New Layout
-    </button>
-
-    <div
-      id="boardResult"
-      class="result">
-    </div>
-
-    <div
-      id="breakdown"
-      class="breakdown">
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- BET TYPES -->
+<!-- ANSWER -->
 
-  <div class="card">
+<div class="card">
 
-    <h3>
-      Bet Types on Layout
-    </h3>
+<h3>
+How many pieces do you pay out?
+</h3>
 
-    <div class="refgrid">
+<input
+id="boardAnswer"
+type="number"
+inputmode="numeric"
+min="0"
+placeholder="Enter total pieces..."
+>
 
-      <div>
-        Straight Up — 35 to 1
-      </div>
+<button
+class="primary"
+id="checkBoard">
+Check Answer
+</button>
 
-      <div>
-        Split — 17 to 1
-      </div>
+<button id="showBoardAnswer">
+Show Answer
+</button>
 
-      <div>
-        Street — 11 to 1
-      </div>
+<button id="newLayout">
+New Layout
+</button>
 
-      <div>
-        Corner — 8 to 1
-      </div>
+<div
+id="boardResult"
+class="result">
+</div>
 
-      <div>
-        Six Line — 5 to 1
-      </div>
+<div
+id="breakdown"
+class="breakdown">
+</div>
 
-      <div>
-        Outside bets — shown only
-      </div>
+</div>
 
-    </div>
 
-  </div>
+<!-- BET TYPES -->
+
+<div class="card">
+
+<h3>
+Bet Types on Layout
+</h3>
+
+<div class="refgrid">
+
+<div>
+Straight Up — 35 to 1
+</div>
+
+<div>
+Split — 17 to 1
+</div>
+
+<div>
+Street — 11 to 1
+</div>
+
+<div>
+Corner — 8 to 1
+</div>
+
+<div>
+Six Line — 5 to 1
+</div>
+
+<div>
+Outside bets — shown only
+</div>
+
+</div>
+
+</div>
 
 </section>
 
@@ -823,155 +734,114 @@ input{
 "use strict";
 
 
-/* =========================
-   RANDOM HELPERS
-========================= */
+/* RANDOM */
 
 function pick(a){
-  return a[
-    Math.floor(
-      Math.random()*a.length
-    )
-  ]
+return a[
+Math.floor(
+Math.random()*a.length
+)
+]
 }
 
 
 function shuffle(a){
 
-  for(
-    var i=a.length-1;
-    i>0;
-    i--
-  ){
+for(
+var i=a.length-1;
+i>0;
+i--
+){
 
-    var j=
-      Math.floor(
-        Math.random()*(i+1)
-      )
+var j=
+Math.floor(
+Math.random()*(i+1)
+)
 
-    var t=a[i]
+var t=a[i]
 
-    a[i]=a[j]
-    a[j]=t
+a[i]=a[j]
+a[j]=t
 
-  }
+}
 
-  return a
+return a
+
 }
 
 
-/* =========================
-   TABS
-========================= */
+/* TABS */
 
 var dealerTab=
-  document.getElementById("dealerTab")
+document.getElementById("dealerTab")
 
 var boardTab=
-  document.getElementById("boardTab")
+document.getElementById("boardTab")
 
 var dealerPanel=
-  document.getElementById("dealerPanel")
+document.getElementById("dealerPanel")
 
 var boardPanel=
-  document.getElementById("boardPanel")
+document.getElementById("boardPanel")
 
 
 dealerTab.onclick=function(){
 
-  dealerTab.classList.add("active")
+dealerTab.classList.add("active")
 
-  boardTab.classList.remove("active")
+boardTab.classList.remove("active")
 
-  dealerPanel.classList.add("active")
+dealerPanel.classList.add("active")
 
-  boardPanel.classList.remove("active")
+boardPanel.classList.remove("active")
 
 }
 
 
 boardTab.onclick=function(){
 
-  boardTab.classList.add("active")
+boardTab.classList.add("active")
 
-  dealerTab.classList.remove("active")
+dealerTab.classList.remove("active")
 
-  boardPanel.classList.add("active")
+boardPanel.classList.add("active")
 
-  dealerPanel.classList.remove("active")
+dealerPanel.classList.remove("active")
 
-  if(!boardBets.length)
-    newBoardLayout()
+if(!boardBets.length)
+newBoardLayout()
 
 }
 
 
-/* =========================
-   SECTION 1
-========================= */
+/* DEALER MATH */
 
 var stakes=[
-  5,
-  10,
-  15,
-  20,
-  25,
-  50,
-  100
+5,10,15,20,25,50,100
 ]
 
 
 var betTypes=[
 
-  {
-    name:"Straight Up",
-    mult:35
-  },
+{name:"Straight Up",mult:35},
 
-  {
-    name:"Split",
-    mult:17
-  },
+{name:"Split",mult:17},
 
-  {
-    name:"Street",
-    mult:11
-  },
+{name:"Street",mult:11},
 
-  {
-    name:"Corner",
-    mult:8
-  },
+{name:"Corner",mult:8},
 
-  {
-    name:"Six Line",
-    mult:5
-  },
+{name:"Six Line",mult:5},
 
-  {
-    name:"Red / Black",
-    mult:1
-  },
+{name:"Red / Black",mult:1},
 
-  {
-    name:"Odd / Even",
-    mult:1
-  },
+{name:"Odd / Even",mult:1},
 
-  {
-    name:"1–18 / 19–36",
-    mult:1
-  },
+{name:"1–18 / 19–36",mult:1},
 
-  {
-    name:"Dozen",
-    mult:2
-  },
+{name:"Dozen",mult:2},
 
-  {
-    name:"Column",
-    mult:2
-  }
+{name:"Column",mult:2}
 
 ]
 
@@ -981,399 +851,386 @@ var dealerBets=[]
 
 function makeDealerBet(){
 
-  var t=pick(betTypes)
+var t=pick(betTypes)
 
-  var label=t.name
-
-
-  if(t.name==="Straight Up"){
-
-    label+=" "+pick(
-      Array.from(
-        {length:36},
-        function(_,i){
-          return i+1
-        }
-      )
-    )
-
-  }
+var label=t.name
 
 
-  if(t.name==="Split"){
-
-    var n=
-      pick(
-        Array.from(
-          {length:35},
-          function(_,i){
-            return i+1
-          }
-        )
-      )
-
-    label+=
-      " "+n+
-      " / "+(n+1)
-
-  }
+if(t.name==="Straight Up")
+label+=" "+
+pick(
+Array.from(
+{length:36},
+function(_,i){
+return i+1
+}
+)
+)
 
 
-  if(t.name==="Street"){
+if(t.name==="Split"){
 
-    var n2=
-      pick(
-        Array.from(
-          {length:12},
-          function(_,i){
-            return i*3+1
-          }
-        )
-      )
+var n=
+pick(
+Array.from(
+{length:35},
+function(_,i){
+return i+1
+}
+)
+)
 
-    label+=
-      " "+n2+
-      "-"+(n2+2)
+label+=
+" "+n+
+" / "+(n+1)
 
-  }
-
-
-  if(t.name==="Corner"){
-
-    var c=
-      pick(
-        Array.from(
-          {length:11},
-          function(_,i){
-            return i
-          }
-        )
-      )
-
-    var r=
-      pick([0,1])
-
-    var a=
-      c*3+r+1
-
-    label=
-      t.name+
-      " "+
-      a+
-      ", "+
-      (a+1)+
-      ", "+
-      (a+3)+
-      ", "+
-      (a+4)
-
-  }
+}
 
 
-  if(t.name==="Six Line"){
+if(t.name==="Street"){
 
-    var s=
-      pick(
-        Array.from(
-          {length:11},
-          function(_,i){
-            return i*3+1
-          }
-        )
-      )
+var n2=
+pick(
+Array.from(
+{length:12},
+function(_,i){
+return i*3+1
+}
+)
+)
 
-    label+=
-      " "+s+
-      "-"+(s+5)
+label+=
+" "+n2+
+"-"+(n2+2)
 
-  }
-
-
-  if(t.name==="Red / Black")
-    label=pick([
-      "Red",
-      "Black"
-    ])
+}
 
 
-  if(t.name==="Odd / Even")
-    label=pick([
-      "Odd",
-      "Even"
-    ])
+if(t.name==="Corner"){
+
+var c=
+pick(
+Array.from(
+{length:11},
+function(_,i){
+return i
+}
+)
+)
+
+var r=
+pick([0,1])
+
+var a=
+c*3+r+1
+
+label=
+"Corner "+
+a+
+", "+
+(a+1)+
+", "+
+(a+3)+
+", "+
+(a+4)
+
+}
 
 
-  if(t.name==="1–18 / 19–36")
-    label=pick([
-      "1–18",
-      "19–36"
-    ])
+if(t.name==="Six Line"){
+
+var s=
+pick(
+Array.from(
+{length:11},
+function(_,i){
+return i*3+1
+}
+)
+)
+
+label+=
+" "+s+
+"-"+(s+5)
+
+}
 
 
-  if(t.name==="Dozen")
-    label=pick([
-      "1st 12",
-      "2nd 12",
-      "3rd 12"
-    ])
+if(t.name==="Red / Black")
+label=pick([
+"Red",
+"Black"
+])
 
 
-  if(t.name==="Column")
-    label=
-      "Column "+
-      pick([1,2,3])
+if(t.name==="Odd / Even")
+label=pick([
+"Odd",
+"Even"
+])
 
 
-  var stake=pick(stakes)
+if(t.name==="1–18 / 19–36")
+label=pick([
+"1–18",
+"19–36"
+])
 
 
-  return{
-    label:label,
-    mult:t.mult,
-    stake:stake,
-    winnings:stake*t.mult
-  }
+if(t.name==="Dozen")
+label=pick([
+"1st 12",
+"2nd 12",
+"3rd 12"
+])
+
+
+if(t.name==="Column")
+label=
+"Column "+
+pick([1,2,3])
+
+
+var stake=pick(stakes)
+
+
+return{
+label:label,
+mult:t.mult,
+stake:stake,
+winnings:stake*t.mult
+}
 
 }
 
 
 function renderDealer(show){
 
-  var box=
-    document.getElementById(
-      "dealerBets"
-    )
+var box=
+document.getElementById(
+"dealerBets"
+)
 
-  box.innerHTML=""
-
-
-  dealerBets.forEach(
-    function(b,i){
-
-      var d=
-        document.createElement(
-          "div"
-        )
-
-      d.className="bet"
+box.innerHTML=""
 
 
-      d.innerHTML=
-        "<b>"+
-        (i+1)+
-        ". "+
-        b.label+
-        "</b> — $"+
-        b.stake+
+dealerBets.forEach(
+function(b,i){
 
-        (
-          show
-          ?
-          '<div class="answer">Winnings: $'+
-          b.winnings+
-          "</div>"
+var d=
+document.createElement(
+"div"
+)
 
-          :
-
-          "<div>Calculate the winnings.</div>"
-        )
+d.className="bet"
 
 
-      box.appendChild(d)
+d.innerHTML=
+"<b>"+
+(i+1)+
+". "+
+b.label+
+"</b> — $"+
+b.stake+
 
-    }
-  )
+(
+show
+
+?
+
+'<div class="answer">Winnings: $'+
+b.winnings+
+"</div>"
+
+:
+
+"<div>Calculate the winnings.</div>"
+)
+
+
+box.appendChild(d)
+
+}
+)
 
 }
 
 
 function generateDealerBets(){
 
-  dealerBets=[]
+dealerBets=[]
 
 
-  for(
-    var i=0,
-    n=4+
-      Math.floor(
-        Math.random()*4
-      );
+for(
+var i=0,
+n=
+4+
+Math.floor(
+Math.random()*4
+);
 
-    i<n;
+i<n;
 
-    i++
-  ){
+i++
+){
 
-    dealerBets.push(
-      makeDealerBet()
-    )
+dealerBets.push(
+makeDealerBet()
+)
 
-  }
+}
 
 
-  renderDealer(false)
+renderDealer(false)
 
-  document.getElementById(
-    "dealerStatus"
-  ).textContent=""
+document.getElementById(
+"dealerStatus"
+).textContent=""
 
 }
 
 
 document.getElementById(
-  "generateBets"
+"generateBets"
 ).onclick=
-  generateDealerBets
+generateDealerBets
 
 
 document.getElementById(
-  "showAnswers"
+"showAnswers"
 ).onclick=
-  function(){
-    renderDealer(true)
-  }
+function(){
+renderDealer(true)
+}
 
 
 document.getElementById(
-  "nextRound"
+"nextRound"
 ).onclick=
-  generateDealerBets
+generateDealerBets
 
 
-/* =========================
-   AMERICAN ROULETTE BOARD
-========================= */
+/* AMERICAN ROULETTE */
 
 var redNumbers=
-  new Set([
-    1,3,5,7,9,
-    12,14,16,18,
-    19,21,23,25,
-    27,30,32,34,36
-  ])
+new Set([
+1,3,5,7,9,
+12,14,16,18,
+19,21,23,25,
+27,30,32,34,36
+])
 
 
 function buildBoard(){
 
-  var g=
-    document.getElementById(
-      "rouletteGrid"
-    )
+var g=
+document.getElementById(
+"rouletteGrid"
+)
 
-  g.innerHTML=""
-
-
-  /* 00 */
-
-  var zz=
-    document.createElement(
-      "div"
-    )
-
-  zz.className=
-    "cell zero"
-
-  zz.textContent="00"
-
-  g.appendChild(zz)
+g.innerHTML=""
 
 
-  /* NUMBER GRID */
+var zz=
+document.createElement(
+"div"
+)
 
-  for(
-    var row=0;
-    row<3;
-    row++
-  ){
+zz.className=
+"cell zero"
 
-    for(
-      var col=0;
-      col<12;
-      col++
-    ){
+zz.textContent="00"
 
-      var num=
-        col*3+
-        (3-row)
+g.appendChild(zz)
 
 
-      var cell=
-        document.createElement(
-          "div"
-        )
+for(
+var row=0;
+row<3;
+row++
+){
+
+for(
+var col=0;
+col<12;
+col++
+){
+
+var num=
+col*3+
+(3-row)
 
 
-      cell.className=
-        "cell number "+
-        (
-          redNumbers.has(num)
-          ?
-          "red"
-          :
-          "black"
-        )
+var cell=
+document.createElement(
+"div"
+)
+
+cell.className=
+"cell number "+
+(
+redNumbers.has(num)
+?
+"red"
+:
+"black"
+)
+
+cell.textContent=num
+
+cell.dataset.number=num
+
+cell.style.gridColumn=
+col+2
+
+cell.style.gridRow=
+row+1
+
+g.appendChild(cell)
+
+}
+
+}
 
 
-      cell.textContent=num
+var z=
+document.createElement(
+"div"
+)
 
-      cell.dataset.number=num
+z.className=
+"cell zero0"
 
-      cell.style.gridColumn=
-        col+2
+z.textContent="0"
 
-      cell.style.gridRow=
-        row+1
-
-
-      g.appendChild(cell)
-
-    }
-
-  }
+g.appendChild(z)
 
 
-  /* 0 */
+for(
+var r=0;
+r<3;
+r++
+){
 
-  var z=
-    document.createElement(
-      "div"
-    )
+var t=
+document.createElement(
+"div"
+)
 
-  z.className=
-    "cell zero0"
+t.className=
+"cell twoto1"
 
-  z.textContent="0"
+t.textContent=
+"2 to 1"
 
-  g.appendChild(z)
+t.style.gridColumn="14"
 
+t.style.gridRow=
+r+1
 
-  /* 2 TO 1 */
+g.appendChild(t)
 
-  for(
-    var r=0;
-    r<3;
-    r++
-  ){
-
-    var t=
-      document.createElement(
-        "div"
-      )
-
-    t.className=
-      "cell twoto1"
-
-    t.textContent=
-      "2 to 1"
-
-    t.style.gridColumn="14"
-
-    t.style.gridRow=
-      r+1
-
-    g.appendChild(t)
-
-  }
+}
 
 }
 
@@ -1381,9 +1238,7 @@ function buildBoard(){
 buildBoard()
 
 
-/* =========================
-   BOARD VARIABLES
-========================= */
+/* BOARD VARIABLES */
 
 var boardBets=[]
 
@@ -1392,1104 +1247,1036 @@ var boardTotal=0
 var winningNumber=0
 
 
-/* =========================
-   VALID INSIDE BETS
-========================= */
+/* INSIDE BETS */
 
 function insideCandidates(n){
 
-  var out=[]
+var out=[]
 
 
-  /* STRAIGHT UP */
+/* STRAIGHT UP */
 
-  out.push({
-    type:"straight",
-    mult:35,
-    n:n,
-    desc:"Straight Up "+n
-  })
-
-
-  /* SPLITS */
-
-  for(
-    var c=0;
-    c<12;
-    c++
-  ){
-
-    for(
-      var row=0;
-      row<3;
-      row++
-    ){
-
-      var here=
-        c*3+
-        (3-row)
+out.push({
+type:"straight",
+mult:35,
+n:n,
+desc:"Straight Up "+n
+})
 
 
-      if(here!==n)
-        continue
+/* SPLITS */
+
+for(
+var c=0;
+c<12;
+c++
+){
+
+for(
+var row=0;
+row<3;
+row++
+){
+
+var here=
+c*3+
+(3-row)
 
 
-      /* Right */
-
-      if(c<11){
-
-        out.push({
-          type:"split",
-          mult:17,
-          a:n,
-          b:
-            (c+1)*3+
-            (3-row),
-          desc:
-            "Split "+
-            n+
-            " / "+
-            (
-              (c+1)*3+
-              (3-row)
-            )
-        })
-
-      }
+if(here!==n)
+continue
 
 
-      /* Left */
+if(c<11){
 
-      if(c>0){
-
-        out.push({
-          type:"split",
-          mult:17,
-          a:n,
-          b:
-            (c-1)*3+
-            (3-row),
-          desc:
-            "Split "+
-            n+
-            " / "+
-            (
-              (c-1)*3+
-              (3-row)
-            )
-        })
-
-      }
-
-
-      /* Up */
-
-      if(row<2){
-
-        out.push({
-          type:"split",
-          mult:17,
-          a:n,
-          b:
-            c*3+
-            (2-row),
-          desc:
-            "Split "+
-            n+
-            " / "+
-            (
-              c*3+
-              (2-row)
-            )
-        })
-
-      }
-
-
-      /* Down */
-
-      if(row>0){
-
-        out.push({
-          type:"split",
-          mult:17,
-          a:n,
-          b:
-            c*3+
-            (4-row),
-          desc:
-            "Split "+
-            n+
-            " / "+
-            (
-              c*3+
-              (4-row)
-            )
-        })
-
-      }
-
-    }
-
-  }
-
-
-  /* STREET */
-
-  var streetStart=
-    Math.floor(
-      (n-1)/3
-    )*3+1
-
-
-  out.push({
-    type:"street",
-    mult:11,
-    start:streetStart,
-    desc:
-      "Street "+
-      streetStart+
-      "–"+
-      (streetStart+2)
-  })
-
-
-  /* CORNERS */
-
-  var col=
-    Math.floor(
-      (n-1)/3
-    )
-
-  var rowIndex=
-    (n-1)%3
-
-
-  for(
-    var cc=
-      Math.max(0,col-1);
-
-    cc<=
-      Math.min(10,col);
-
-    cc++
-  ){
-
-    for(
-      var rr=0;
-      rr<=1;
-      rr++
-    ){
-
-      var nums=[
-        cc*3+rr+1,
-        cc*3+rr+2,
-        cc*3+rr+4,
-        cc*3+rr+5
-      ]
-
-
-      if(
-        nums.indexOf(n)>=0
-      ){
-
-        out.push({
-          type:"corner",
-          mult:8,
-          col:cc,
-          row:rr,
-          desc:
-            "Corner "+
-            nums.join(", ")
-        })
-
-      }
-
-    }
-
-  }
-
-
-  /* SIX LINE */
-
-  var sixStart=
-    Math.floor(
-      (n-1)/6
-    )*6+1
-
-
-  if(sixStart<=31){
-
-    out.push({
-      type:"sixline",
-      mult:5,
-      start:sixStart,
-      desc:
-        "Six Line "+
-        sixStart+
-        "–"+
-        (sixStart+5)
-    })
-
-  }
-
-
-  return out
+out.push({
+type:"split",
+mult:17,
+a:n,
+b:
+(c+1)*3+
+(3-row),
+desc:
+"Split "+
+n+
+" / "+
+(
+(c+1)*3+
+(3-row)
+)
+})
 
 }
 
 
-/* =========================
-   BET UNIQUE KEY
-========================= */
+if(c>0){
+
+out.push({
+type:"split",
+mult:17,
+a:n,
+b:
+(c-1)*3+
+(3-row),
+desc:
+"Split "+
+n+
+" / "+
+(
+(c-1)*3+
+(3-row)
+)
+})
+
+}
+
+
+if(row<2){
+
+out.push({
+type:"split",
+mult:17,
+a:n,
+b:
+c*3+
+(2-row),
+desc:
+"Split "+
+n+
+" / "+
+(
+c*3+
+(2-row)
+)
+})
+
+}
+
+
+if(row>0){
+
+out.push({
+type:"split",
+mult:17,
+a:n,
+b:
+c*3+
+(4-row),
+desc:
+"Split "+
+n+
+" / "+
+(
+c*3+
+(4-row)
+)
+})
+
+}
+
+}
+
+}
+
+
+/* STREET */
+
+var streetStart=
+Math.floor(
+(n-1)/3
+)*3+1
+
+out.push({
+type:"street",
+mult:11,
+start:streetStart,
+desc:
+"Street "+
+streetStart+
+"–"+
+(streetStart+2)
+})
+
+
+/* CORNERS */
+
+var col=
+Math.floor(
+(n-1)/3
+)
+
+var rowIndex=
+(n-1)%3
+
+
+for(
+var cc=
+Math.max(0,col-1);
+
+cc<=
+Math.min(10,col);
+
+cc++
+){
+
+for(
+var rr=0;
+rr<=1;
+rr++
+){
+
+var nums=[
+cc*3+rr+1,
+cc*3+rr+2,
+cc*3+rr+4,
+cc*3+rr+5
+]
+
+
+if(
+nums.indexOf(n)>=0
+){
+
+out.push({
+type:"corner",
+mult:8,
+col:cc,
+row:rr,
+desc:
+"Corner "+
+nums.join(", ")
+})
+
+}
+
+}
+
+}
+
+
+/* SIX LINE */
+
+var sixStart=
+Math.floor(
+(n-1)/6
+)*6+1
+
+
+if(sixStart<=31){
+
+out.push({
+type:"sixline",
+mult:5,
+start:sixStart,
+desc:
+"Six Line "+
+sixStart+
+"–"+
+(sixStart+5)
+})
+
+}
+
+
+return out
+
+}
+
+
+/* UNIQUE KEY */
 
 function key(b){
 
-  return(
-    b.type+
-    "|"+
-    [
-      b.n,
-      b.a,
-      b.b,
-      b.start,
-      b.col,
-      b.row
-    ].join("|")
-  )
+return(
+b.type+
+"|"+
+[
+b.n,
+b.a,
+b.b,
+b.start,
+b.col,
+b.row
+].join("|")
+)
 
 }
 
 
-/* =========================
-   FIND NUMBER CELL
-========================= */
+/* NUMBER CENTER */
 
 function cellCenter(n){
 
-  var el=
-    document.querySelector(
-      '.cell.number[data-number="'+
-      n+
-      '"]'
-    )
+var el=
+document.querySelector(
+'.cell.number[data-number="'+
+n+
+'"]'
+)
 
 
-  if(!el)
-    return null
+if(!el)
+return null
 
 
-  var br=
-    document
-      .getElementById("board")
-      .getBoundingClientRect()
+var br=
+document
+.getElementById("board")
+.getBoundingClientRect()
 
 
-  var r=
-    el.getBoundingClientRect()
+var r=
+el.getBoundingClientRect()
 
 
-  return{
-    x:
-      r.left-
-      br.left+
-      r.width/2,
+return{
+x:
+r.left-
+br.left+
+r.width/2,
 
-    y:
-      r.top-
-      br.top+
-      r.height/2
-  }
+y:
+r.top-
+br.top+
+r.height/2
+}
 
 }
 
 
-/* =========================
-   ADD CHIP
-========================= */
+/* ADD CHIP */
 
 function addChipXY(
-  x,
-  y,
-  count,
-  index
+x,
+y,
+count,
+index
 ){
 
-  var chip=
-    document.createElement(
-      "div"
-    )
+var chip=
+document.createElement(
+"div"
+)
 
-  chip.className=
-    "chip c"+
-    (index%6)
-
-
-  var br=
-    document
-      .getElementById("board")
-      .getBoundingClientRect()
+chip.className=
+"chip c"+
+(index%6)
 
 
-  chip.style.left=
-    (
-      x/
-      br.width*
-      100
-    )+
-    "%"
+var br=
+document
+.getElementById("board")
+.getBoundingClientRect()
 
 
-  chip.style.top=
-    (
-      y/
-      br.height*
-      100
-    )+
-    "%"
+chip.style.left=
+(
+x/
+br.width*
+100
+)+
+"%"
 
 
-  var s=
-    document.createElement(
-      "span"
-    )
+chip.style.top=
+(
+y/
+br.height*
+100
+)+
+"%"
 
-  s.textContent=count
 
-  chip.appendChild(s)
+var s=
+document.createElement(
+"span"
+)
+
+s.textContent=count
+
+chip.appendChild(s)
 
 
-  document
-    .getElementById("board")
-    .appendChild(chip)
+document
+.getElementById("board")
+.appendChild(chip)
 
 }
 
 
-/* =========================
-   CLEAR CHIPS
-========================= */
+/* CLEAR */
 
 function clearChips(){
 
-  document
-    .querySelectorAll(
-      ".chip,.winner"
-    )
-    .forEach(
-      function(x){
-        x.remove()
-      }
-    )
+document
+.querySelectorAll(
+".chip,.winner"
+)
+.forEach(
+function(x){
+x.remove()
+}
+)
 
 }
 
 
-/* =========================
-   BET LOCATION
-========================= */
+/* CHIP POSITION */
 
 function basePoint(b){
 
-  /* Straight */
-
-  if(
-    b.type==="straight"
-  ){
-
-    return cellCenter(b.n)
-
-  }
+if(
+b.type==="straight"
+)
+return cellCenter(b.n)
 
 
-  /* Split */
+if(
+b.type==="split"
+){
 
-  if(
-    b.type==="split"
-  ){
+var a=
+cellCenter(b.a)
 
-    var a=
-      cellCenter(b.a)
-
-    var c=
-      cellCenter(b.b)
+var c=
+cellCenter(b.b)
 
 
-    return{
-      x:
-        (a.x+c.x)/2,
+return{
+x:
+(a.x+c.x)/2,
 
-      y:
-        (a.y+c.y)/2
-    }
-
-  }
-
-
-  /* Street */
-
-  if(
-    b.type==="street"
-  ){
-
-    var a1=
-      cellCenter(b.start)
-
-    var a2=
-      cellCenter(
-        b.start+2
-      )
-
-
-    return{
-      x:
-        (a1.x+a2.x)/2,
-
-      y:a1.y
-    }
-
-  }
-
-
-  /* Corner */
-
-  if(
-    b.type==="corner"
-  ){
-
-    var n1=
-      b.col*3+
-      b.row+
-      1
-
-    var n2=
-      n1+1
-
-    var n3=
-      n1+3
-
-    var n4=
-      n1+4
-
-
-    var a=
-      cellCenter(n1)
-
-    var c=
-      cellCenter(n4)
-
-
-    return{
-      x:
-        (a.x+c.x)/2,
-
-      y:
-        (a.y+c.y)/2
-    }
-
-  }
-
-
-  /* Six Line */
-
-  if(
-    b.type==="sixline"
-  ){
-
-    var a3=
-      cellCenter(b.start)
-
-    var c3=
-      cellCenter(
-        b.start+5
-      )
-
-
-    return{
-      x:
-        (a3.x+c3.x)/2,
-
-      y:
-        a3.y+
-        document
-          .getElementById("board")
-          .getBoundingClientRect()
-          .height*
-        .07
-    }
-
-  }
-
-
-  return null
+y:
+(a.y+c.y)/2
+}
 
 }
 
 
-/* =========================
-   WINNER HIGHLIGHT
-========================= */
+if(
+b.type==="street"
+){
+
+var a1=
+cellCenter(b.start)
+
+var a2=
+cellCenter(
+b.start+2
+)
+
+
+return{
+x:
+(a1.x+a2.x)/2,
+
+y:a1.y
+}
+
+}
+
+
+if(
+b.type==="corner"
+){
+
+var n1=
+b.col*3+
+b.row+
+1
+
+var n4=
+n1+4
+
+
+var a=
+cellCenter(n1)
+
+var c=
+cellCenter(n4)
+
+
+return{
+x:
+(a.x+c.x)/2,
+
+y:
+(a.y+c.y)/2
+}
+
+}
+
+
+if(
+b.type==="sixline"
+){
+
+var a3=
+cellCenter(b.start)
+
+var c3=
+cellCenter(
+b.start+5
+)
+
+
+return{
+x:
+(a3.x+c3.x)/2,
+
+y:
+a3.y+
+document
+.getElementById("board")
+.getBoundingClientRect()
+.height*
+.07
+}
+
+}
+
+
+return null
+
+}
+
+
+/* WINNER */
 
 function placeWinner(){
 
-  var el=
-    document.querySelector(
-      '.cell.number[data-number="'+
-      winningNumber+
-      '"]'
-    )
+var el=
+document.querySelector(
+'.cell.number[data-number="'+
+winningNumber+
+'"]'
+)
 
 
-  if(!el)
-    return
+if(!el)
+return
 
 
-  var r=
-    el.getBoundingClientRect()
+var r=
+el.getBoundingClientRect()
 
 
-  var br=
-    document
-      .getElementById("board")
-      .getBoundingClientRect()
+var br=
+document
+.getElementById("board")
+.getBoundingClientRect()
 
 
-  var w=
-    document.createElement(
-      "div"
-    )
+var w=
+document.createElement(
+"div"
+)
+
+w.className="winner"
 
 
-  w.className="winner"
+w.style.left=
+(
+r.left-
+br.left
+)+
+"px"
 
 
-  w.style.left=
-    (
-      r.left-
-      br.left
-    )+
-    "px"
+w.style.top=
+(
+r.top-
+br.top
+)+
+"px"
 
 
-  w.style.top=
-    (
-      r.top-
-      br.top
-    )+
-    "px"
+w.style.width=
+r.width+
+"px"
 
 
-  w.style.width=
-    r.width+
-    "px"
+w.style.height=
+r.height+
+"px"
 
 
-  w.style.height=
-    r.height+
-    "px"
-
-
-  document
-    .getElementById("board")
-    .appendChild(w)
+document
+.getElementById("board")
+.appendChild(w)
 
 }
 
 
-/* =========================
-   PLACE CHIPS
-========================= */
+/* PLACE CHIPS */
 
 function placeChips(){
 
-  var br=
-    document
-      .getElementById("board")
-      .getBoundingClientRect()
+var br=
+document
+.getElementById("board")
+.getBoundingClientRect()
 
 
-  var offsets=[
-    [0,-.045],
-    [-.045,0],
-    [.045,0],
-    [0,.045],
-    [-.035,.035]
-  ]
+var offsets=[
+[0,-.045],
+[-.045,0],
+[.045,0],
+[0,.045],
+[-.035,.035]
+]
 
 
-  boardBets.forEach(
-    function(b,i){
+boardBets.forEach(
+function(b,i){
 
-      var p=
-        basePoint(b)
-
-
-      if(!p)
-        return
+var p=
+basePoint(b)
 
 
-      var dx=
-        br.width*
-        offsets[i][0]
+if(!p)
+return
 
 
-      var dy=
-        br.height*
-        offsets[i][1]
+var dx=
+br.width*
+offsets[i][0]
 
 
-      addChipXY(
-        p.x+dx,
-        p.y+dy,
-        b.count,
-        i
-      )
+var dy=
+br.height*
+offsets[i][1]
 
-    }
-  )
+
+addChipXY(
+p.x+dx,
+p.y+dy,
+b.count,
+i
+)
+
+}
+
+)
 
 }
 
 
-/* =========================
-   BREAKDOWN
-========================= */
+/* BREAKDOWN */
 
 function renderBreakdown(){
 
-  var box=
-    document.getElementById(
-      "breakdown"
-    )
+var box=
+document.getElementById(
+"breakdown"
+)
 
 
-  box.innerHTML=
-    '<div class="breakdown-row breakdown-head">'+
-      '<div>Bet</div>'+
-      '<div>Chips</div>'+
-      '<div>Odds</div>'+
-      '<div>Winnings</div>'+
-    '</div>'
+box.innerHTML=
+'<div class="breakdown-row breakdown-head">'+
+'<div>Bet</div>'+
+'<div>Chips</div>'+
+'<div>Odds</div>'+
+'<div>Winnings</div>'+
+'</div>'
 
 
-  boardBets.forEach(
-    function(b){
+boardBets.forEach(
+function(b){
 
-      var d=
-        document.createElement(
-          "div"
-        )
+var d=
+document.createElement(
+"div"
+)
 
-
-      d.className=
-        "breakdown-row"
-
-
-      d.innerHTML=
-        "<div>"+
-        b.desc+
-        "</div>"+
-
-        "<div>"+
-        b.count+
-        "</div>"+
-
-        "<div>"+
-        b.mult+
-        " to 1"+
-        "</div>"+
-
-        "<div>"+
-        (
-          b.count*
-          b.mult
-        )+
-        "</div>"
+d.className=
+"breakdown-row"
 
 
-      box.appendChild(d)
+d.innerHTML=
+"<div>"+
+b.desc+
+"</div>"+
 
-    }
-  )
+"<div>"+
+b.count+
+"</div>"+
 
+"<div>"+
+b.mult+
+" to 1"+
+"</div>"+
 
-  var total=
-    document.createElement(
-      "div"
-    )
-
-
-  total.className=
-    "breakdown-row"
-
-
-  total.innerHTML=
-    '<div><b>Total</b></div>'+
-    '<div></div>'+
-    '<div></div>'+
-    '<div><b>'+
-    boardTotal+
-    '</b></div>'
+"<div>"+
+(
+b.count*
+b.mult
+)+
+"</div>"
 
 
-  box.appendChild(total)
+box.appendChild(d)
 
 }
 
 
-/* =========================
-   NEW BOARD
-========================= */
+)
+
+
+var total=
+document.createElement(
+"div"
+)
+
+total.className=
+"breakdown-row"
+
+
+total.innerHTML=
+'<div><b>Total</b></div>'+
+'<div></div>'+
+'<div></div>'+
+'<div><b>'+
+boardTotal+
+'</b></div>'
+
+
+box.appendChild(total)
+
+}
+
+
+/* NEW BOARD */
 
 function newBoardLayout(){
 
-  clearChips()
+clearChips()
 
-  boardBets=[]
+boardBets=[]
 
-  boardTotal=0
-
-
-  document
-    .getElementById(
-      "boardAnswer"
-    )
-    .value=""
+boardTotal=0
 
 
-  document
-    .getElementById(
-      "boardResult"
-    )
-    .textContent=""
+document.getElementById(
+"boardAnswer"
+).value=""
 
 
-  document
-    .getElementById(
-      "boardResult"
-    )
-    .className="result"
+document.getElementById(
+"boardResult"
+).textContent=""
 
 
-  document
-    .getElementById(
-      "breakdown"
-    )
-    .className="breakdown"
+document.getElementById(
+"boardResult"
+).className=
+"result"
 
 
-  /* Winning number:
-     1 through 25 only */
-
-  winningNumber=
-    pick(
-      Array.from(
-        {length:25},
-        function(_,i){
-          return i+1
-        }
-      )
-    )
+document.getElementById(
+"breakdown"
+).className=
+"breakdown"
 
 
-  var candidates=
-    shuffle(
-      insideCandidates(
-        winningNumber
-      )
-    )
+/* WINNING NUMBER 1-25 */
+
+winningNumber=
+pick(
+Array.from(
+{length:25},
+function(_,i){
+return i+1
+}
+)
+)
 
 
-  /* Prefer different bet types */
-
-  var preferred=[
-    "straight",
-    "split",
-    "street",
-    "corner",
-    "sixline"
-  ]
+var candidates=
+shuffle(
+insideCandidates(
+winningNumber
+)
+)
 
 
-  for(
-    var p=0;
-    p<preferred.length;
-    p++
-  ){
+/* DIFFERENT BET TYPES */
 
-    var found=
-      candidates.find(
-        function(b){
-
-          return(
-            b.type===
-              preferred[p] &&
-
-            !boardBets.some(
-              function(x){
-                return(
-                  key(x)===
-                  key(b)
-                )
-              }
-            )
-          )
-
-        }
-      )
+var preferred=[
+"straight",
+"split",
+"street",
+"corner",
+"sixline"
+]
 
 
-    if(found)
-      boardBets.push(found)
+for(
+var p=0;
+p<preferred.length;
+p++
+){
 
-  }
+var found=
+candidates.find(
+function(b){
 
+return(
+b.type===
+preferred[p] &&
 
-  /* Fill remaining spots */
+!boardBets.some(
+function(x){
+return(
+key(x)===
+key(b)
+)
+}
+)
+)
 
-  for(
-    var i=0;
-
-    i<candidates.length &&
-    boardBets.length<6;
-
-    i++
-  ){
-
-    if(
-      !boardBets.some(
-        function(x){
-          return(
-            key(x)===
-            key(candidates[i])
-          )
-        }
-      )
-    ){
-
-      boardBets.push(
-        candidates[i]
-      )
-
-    }
-
-  }
+}
+)
 
 
-  boardBets=
-    boardBets.slice(0,6)
-
-
-  /* Random chip counts.
-     Maximum is 25. */
-
-  boardBets.forEach(
-    function(b){
-
-      b.count=
-        pick([
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          10,
-          12,
-          15,
-          18,
-          20,
-          22,
-          25
-        ])
-
-
-      boardTotal+=
-        b.count*
-        b.mult
-
-    }
-  )
-
-
-  /* Wait until board has rendered */
-
-  requestAnimationFrame(
-    function(){
-
-      placeWinner()
-
-      placeChips()
-
-    }
-  )
+if(found)
+boardBets.push(found)
 
 }
 
 
-/* =========================
-   CHECK ANSWER
-========================= */
+/* FILL TO SIX BETS */
+
+for(
+var i=0;
+
+i<candidates.length &&
+boardBets.length<6;
+
+i++
+){
+
+if(
+!boardBets.some(
+function(x){
+return(
+key(x)===
+key(candidates[i])
+)
+}
+)
+){
+
+boardBets.push(
+candidates[i]
+)
+
+}
+
+}
+
+
+boardBets=
+boardBets.slice(0,6)
+
+
+/* CHIP COUNTS 2-25 */
+
+boardBets.forEach(
+function(b){
+
+b.count=
+pick([
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+10,
+12,
+15,
+18,
+20,
+22,
+25
+])
+
+
+boardTotal+=
+b.count*
+b.mult
+
+}
+)
+
+
+requestAnimationFrame(
+function(){
+
+placeWinner()
+
+placeChips()
+
+}
+)
+
+}
+
+
+/* CHECK */
 
 document
-  .getElementById(
-    "checkBoard"
-  )
-  .onclick=
-  function(){
+.getElementById(
+"checkBoard"
+)
+.onclick=
+function(){
 
-    var input=
-      document.getElementById(
-        "boardAnswer"
-      )
+var input=
+document.getElementById(
+"boardAnswer"
+)
 
+var res=
+document.getElementById(
+"boardResult"
+)
 
-    var res=
-      document.getElementById(
-        "boardResult"
-      )
-
-
-    var v=
-      Number(
-        input.value
-      )
+var v=
+Number(
+input.value
+)
 
 
-    if(
-      input.value===""
-    ){
+if(
+input.value===
+""
+){
 
-      res.className=
-        "result bad"
+res.className=
+"result bad"
 
-      res.textContent=
-        "Enter your total first."
+res.textContent=
+"Enter your total first."
 
-      return
+return
 
-    }
-
-
-    if(
-      v===boardTotal
-    ){
-
-      res.className=
-        "result good"
-
-      res.textContent=
-        "Correct — "+
-        boardTotal+
-        " pieces."
-
-    }
-    else{
-
-      res.className=
-        "result bad"
-
-      res.textContent=
-        "Not quite. Try again."
-
-    }
-
-  }
+}
 
 
-/* =========================
-   SHOW ANSWER
-========================= */
+if(
+v===
+boardTotal
+){
+
+res.className=
+"result good"
+
+res.textContent=
+"Correct — "+
+boardTotal+
+" pieces."
+
+}
+else{
+
+res.className=
+"result bad"
+
+res.textContent=
+"Not quite. Try again."
+
+}
+
+}
+
+
+/* SHOW ANSWER */
 
 document
-  .getElementById(
-    "showBoardAnswer"
-  )
-  .onclick=
-  function(){
+.getElementById(
+"showBoardAnswer"
+)
+.onclick=
+function(){
 
-    var res=
-      document.getElementById(
-        "boardResult"
-      )
-
-
-    res.className=
-      "result good"
+var res=
+document.getElementById(
+"boardResult"
+)
 
 
-    res.textContent=
-      "Winning Number: "+
-      winningNumber+
-      " — Answer: "+
-      boardTotal+
-      " pieces."
+res.className=
+"result good"
 
 
-    renderBreakdown()
+res.textContent=
+"Winning Number: "+
+winningNumber+
+" — Answer: "+
+boardTotal+
+" pieces."
 
 
-    document
-      .getElementById(
-        "breakdown"
-      )
-      .classList.add(
-        "show"
-      )
+renderBreakdown()
 
-  }
-
-
-/* =========================
-   NEW LAYOUT BUTTON
-========================= */
 
 document
-  .getElementById(
-    "newLayout"
-  )
-  .onclick=
-    newBoardLayout
+.getElementById(
+"breakdown"
+)
+.classList.add(
+"show"
+)
+
+}
 
 
-/* =========================
-   INITIAL ROUNDS
-========================= */
+/* NEW LAYOUT */
+
+document
+.getElementById(
+"newLayout"
+)
+.onclick=
+newBoardLayout
+
+
+/* INITIAL */
 
 generateDealerBets()
 
 newBoardLayout()
 
 
-/* =========================
-   IPHONE ROTATION / RESIZE
-========================= */
+/* IPHONE RESIZE */
 
 window.addEventListener(
-  "resize",
-  function(){
+"resize",
+function(){
 
-    if(
-      boardBets.length
-    ){
+if(
+boardBets.length
+){
 
-      clearChips()
+clearChips()
 
 
-      requestAnimationFrame(
-        function(){
+requestAnimationFrame(
+function(){
 
-          placeWinner()
+placeWinner()
 
-          placeChips()
+placeChips()
 
-        }
-      )
+}
+)
 
-    }
+}
 
-  }
+}
 )
 
 </script>
