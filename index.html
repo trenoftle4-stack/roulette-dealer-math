@@ -3,66 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
 <title>Roulette Dealer Math Trainer</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   background:#07111b;
   color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
 
 .app{
   width:min(100%,900px);
   margin:auto;
-  padding:10px;
+  padding:10px
 }
-
-
-/* =========================
-   HEADER
-========================= */
 
 header{
   display:flex;
   align-items:center;
   gap:12px;
-  margin:6px 0 14px;
+  margin:6px 0 14px
 }
 
 .logo{
   font-size:38px;
-  flex:none;
+  flex:none
 }
 
 h1{
   margin:0;
   font-size:clamp(28px,7vw,44px);
-  line-height:1.04;
+  line-height:1.04
 }
 
 .subtitle{
   color:#b9c9da;
   font-size:15px;
-  margin-top:6px;
+  margin-top:6px
 }
-
-
-/* =========================
-   TABS
-========================= */
 
 .tabs{
   display:flex;
   gap:8px;
-  margin-bottom:10px;
+  margin-bottom:10px
 }
 
 .tab{
@@ -73,25 +59,20 @@ h1{
   background:#16283a;
   color:#fff;
   font-size:18px;
-  font-weight:900;
+  font-weight:900
 }
 
 .tab.active{
   background:#08a851;
-  border-color:#18dc70;
+  border-color:#18dc70
 }
 
-
-/* =========================
-   GENERAL
-========================= */
-
 .panel{
-  display:none;
+  display:none
 }
 
 .panel.active{
-  display:block;
+  display:block
 }
 
 .card{
@@ -99,33 +80,32 @@ h1{
   border:1px solid #30485e;
   border-radius:14px;
   padding:14px;
-  margin-top:10px;
+  margin-top:10px
 }
 
-.card h2,
-.card h3{
-  margin:0 0 12px;
+.card h2,.card h3{
+  margin:0 0 12px
 }
 
 .card p{
   color:#c4d3e1;
   font-size:16px;
-  line-height:1.4;
+  line-height:1.4
 }
 
 .bet{
   padding:11px 0;
-  border-bottom:1px solid #2d4053;
+  border-bottom:1px solid #2d4053
 }
 
 .bet:last-child{
-  border-bottom:0;
+  border-bottom:0
 }
 
 .answer{
   color:#72f1a5;
   font-weight:800;
-  margin-top:4px;
+  margin-top:4px
 }
 
 button{
@@ -137,11 +117,11 @@ button{
   font-size:18px;
   font-weight:900;
   color:#fff;
-  background:#304c68;
+  background:#304c68
 }
 
 button.primary{
-  background:#08b957;
+  background:#08b957
 }
 
 input{
@@ -151,21 +131,21 @@ input{
   border:1px solid #48627a;
   background:#14283a;
   color:#fff;
-  font-size:20px;
+  font-size:20px
 }
 
 .result{
   min-height:24px;
   margin-top:10px;
-  font-weight:900;
+  font-weight:900
 }
 
 .good{
-  color:#67f19b;
+  color:#67f19b
 }
 
 .bad{
-  color:#ff7373;
+  color:#ff7373
 }
 
 
@@ -175,15 +155,13 @@ input{
 
 .board-wrap{
   width:100%;
-  overflow:hidden;
+  overflow:hidden
 }
 
 .board{
   position:relative;
-
   width:100%;
-  aspect-ratio:1.58 / 1;
-
+  aspect-ratio:1.58/1;
   background:
     radial-gradient(
       circle at 50% 45%,
@@ -191,302 +169,282 @@ input{
       #045d2d 58%,
       #034b25 100%
     );
-
   border:8px solid #613718;
   border-radius:18px;
-
   box-shadow:
     inset 0 0 0 3px #9b6236,
     0 8px 22px #0009;
-
-  overflow:hidden;
+  overflow:hidden
 }
-
-
-/* BOARD HEADER */
 
 .board-title{
   position:absolute;
-
   left:3%;
   top:3.5%;
-
   font-size:clamp(13px,3vw,27px);
-  font-weight:900;
+  font-weight:900
 }
 
 .board-sub{
   position:absolute;
-
   right:3%;
   top:3.5%;
-
   text-align:right;
-
   color:#dce9f5;
-
   font-size:clamp(7px,1.55vw,14px);
-  line-height:1.25;
+  line-height:1.25
 }
 
-
-/* =========================
-   NUMBER GRID
-========================= */
-
 .roulette-grid{
-
   position:absolute;
-
   left:4.5%;
   right:4.5%;
-
   top:18%;
-
   height:42%;
-
   display:grid;
-
   grid-template-columns:
     6.5%
     repeat(12,minmax(0,1fr))
     6.5%;
-
-  grid-template-rows:
-    repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr)
 }
 
 .cell{
-
   border:1px solid rgba(255,255,255,.95);
-
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   position:relative;
-
   font-weight:900;
-
   min-width:0;
-  min-height:0;
+  min-height:0
 }
 
 .zero{
-
   grid-column:1;
-  grid-row:1 / 3;
-
+  grid-row:1/3;
   background:#08733a;
-
-  font-size:clamp(10px,3vw,25px);
+  font-size:clamp(10px,3vw,25px)
 }
 
 .zero0{
-
   grid-column:1;
   grid-row:3;
-
   background:#08733a;
-
-  font-size:clamp(10px,3vw,25px);
+  font-size:clamp(10px,3vw,25px)
 }
 
 .number{
-  font-size:clamp(10px,3vw,25px);
+  font-size:clamp(10px,3vw,25px)
 }
 
 .number.red{
-  background:#d3262d;
+  background:#d3262d
 }
 
 .number.black{
-  background:#111519;
+  background:#111519
 }
-
-
-/* =========================
-   2 TO 1
-========================= */
 
 .twoto1{
-
-  background:#08733a;
-
   font-size:clamp(7px,1.7vw,17px);
-
+  background:#08733a;
   text-align:center;
-
-  line-height:1.05;
+  line-height:1.05
 }
-
-
-/* =========================
-   DOZENS
-========================= */
 
 .dozens{
-
   position:absolute;
-
   left:10.5%;
   right:10.5%;
-
   top:60%;
-
   height:10%;
-
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
+  grid-template-columns:repeat(3,1fr)
 }
 
-
-/* =========================
-   OUTSIDE BETS
-========================= */
-
 .outside{
-
   position:absolute;
-
   left:10.5%;
   right:10.5%;
-
   top:70%;
-
   height:10%;
-
   display:grid;
-
-  grid-template-columns:
-    repeat(6,1fr);
+  grid-template-columns:repeat(6,1fr)
 }
 
 .betbox{
-
   border:1px solid rgba(255,255,255,.95);
-
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   font-weight:900;
-
   font-size:clamp(7px,1.9vw,18px);
-
-  text-align:center;
+  text-align:center
 }
 
 .red-box{
-  background:rgba(190,20,30,.28);
+  background:rgba(190,20,30,.28)
 }
 
 .black-box{
-  background:rgba(0,0,0,.22);
+  background:rgba(0,0,0,.22)
 }
 
 
 /* =========================
-   CHIPS
+   ROULETTE CHIPS
 ========================= */
 
 .chip{
-
   position:absolute;
 
-  width:clamp(28px,5.8vw,56px);
-  height:clamp(28px,5.8vw,56px);
+  width:clamp(34px,6.4vw,58px);
+  height:clamp(34px,6.4vw,58px);
 
   border-radius:50%;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff9db 0 16%,
-      #e5c967 17% 54%,
-      #9a7017 55% 100%
-    );
-
-  border:3px solid #eee7c9;
-
-  color:#101010;
-
   display:flex;
-
   align-items:center;
   justify-content:center;
 
-  font-size:clamp(9px,1.65vw,18px);
-
+  font-size:clamp(10px,1.8vw,18px);
   font-weight:950;
 
+  color:#111;
+
+  background:
+    radial-gradient(
+      circle,
+      #fff 0 43%,
+      transparent 44%
+    ),
+    var(--chip);
+
+  border:2px solid #f7f7f7;
+
   box-shadow:
-    0 4px 7px #0008;
+    0 3px 5px #000b,
+    0 0 0 2px #222;
 
   z-index:20;
 
-  transform:
-    translate(-50%,-50%);
+  transform:translate(-50%,-50%)
+}
+
+.chip:before{
+  content:"";
+  position:absolute;
+  inset:5%;
+  border-radius:50%;
+
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      #fff 0deg 8deg,
+      transparent 8deg 24deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      circle,
+      transparent 0 60%,
+      #000 61%
+    );
+
+  mask:
+    radial-gradient(
+      circle,
+      transparent 0 60%,
+      #000 61%
+    );
+
+  opacity:.95
 }
 
 .chip:after{
-
   content:"";
-
   position:absolute;
+  inset:15%;
 
-  inset:9%;
-
-  border:
-    2px dashed #765817;
+  border:2px solid color-mix(
+    in srgb,
+    var(--chip) 72%,
+    #000
+  );
 
   border-radius:50%;
+
+  box-shadow:
+    inset 0 0 0 1px #fff
 }
 
 .chip span{
-
   position:relative;
-
   z-index:2;
+
+  color:var(--chip);
+
+  text-shadow:
+    0 1px 0 #fff
 }
 
 
-/* WINNING NUMBER HIGHLIGHT */
+/* Chip colors */
+
+.chip.c0{
+  --chip:#e11d8f
+}
+
+.chip.c1{
+  --chip:#2f7de1
+}
+
+.chip.c2{
+  --chip:#f0a91b
+}
+
+.chip.c3{
+  --chip:#28a84a
+}
+
+.chip.c4{
+  --chip:#7b35d8
+}
+
+.chip.c5{
+  --chip:#e33a31
+}
+
+
+/* Winning number highlight */
 
 .winner{
-
   position:absolute;
-
   z-index:5;
 
-  border:
-    3px solid #ffe25a;
+  border:3px solid #ffe25a;
 
   box-shadow:
     0 0 0 2px #000,
     0 0 12px #ffe25a88;
 
-  pointer-events:none;
+  pointer-events:none
 }
 
-
-/* =========================
-   LEGEND
-========================= */
-
 .legend{
-
   text-align:center;
-
   color:#c9d8e5;
-
   font-size:13px;
+  margin-top:7px
+}
 
-  margin-top:7px;
+.refgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px 20px;
+  color:#d5e2ed;
+  font-size:13px
 }
 
 
@@ -495,80 +453,45 @@ input{
 ========================= */
 
 .breakdown{
-
   margin-top:12px;
-
-  border:
-    1px solid #30485e;
-
+  border:1px solid #30485e;
   border-radius:10px;
-
   overflow:hidden;
-
-  display:none;
+  display:none
 }
 
 .breakdown.show{
-  display:block;
+  display:block
 }
 
 .breakdown-row{
-
   display:grid;
-
   grid-template-columns:
-    1.3fr
+    1.25fr
+    .8fr
     .55fr
-    .7fr
-    .75fr;
+    .8fr;
 
-  font-size:12px;
-
-  border-bottom:
-    1px solid #27394a;
+  border-bottom:1px solid #27394a;
+  font-size:12px
 }
 
 .breakdown-row:last-child{
-  border-bottom:0;
+  border-bottom:0
 }
 
-.breakdown-row > div{
-
+.breakdown-row>div{
   padding:7px;
-
-  border-right:
-    1px solid #27394a;
+  border-right:1px solid #27394a
 }
 
-.breakdown-row > div:last-child{
-  border-right:0;
+.breakdown-row>div:last-child{
+  border-right:0
 }
 
 .breakdown-head{
-
   font-weight:900;
-
-  background:#142638;
-}
-
-
-/* =========================
-   REFERENCE
-========================= */
-
-.refgrid{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:
-    6px 20px;
-
-  color:#d5e2ed;
-
-  font-size:13px;
+  background:#142638
 }
 
 
@@ -579,38 +502,37 @@ input{
 @media(max-width:600px){
 
   .app{
-    padding:8px;
+    padding:8px
   }
 
   .logo{
-    font-size:34px;
+    font-size:34px
   }
 
   .subtitle{
-    font-size:13px;
+    font-size:13px
   }
 
   .card{
-    padding:12px;
+    padding:12px
   }
 
   .card p{
-    font-size:14px;
+    font-size:14px
   }
 
   .tab{
     font-size:16px;
-    padding:14px 6px;
+    padding:14px 6px
   }
 
   .board{
-    border-width:7px;
+    border-width:7px
   }
 
   .breakdown-row{
-    font-size:11px;
+    font-size:11px
   }
-
 }
 
 </style>
@@ -621,29 +543,16 @@ input{
 
 <div class="app">
 
-
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
-
-  <div class="logo">
-    🎰
-  </div>
+  <div class="logo">🎰</div>
 
   <div>
-
-    <h1>
-      Roulette Dealer Math Trainer
-    </h1>
+    <h1>Roulette Dealer Math Trainer</h1>
 
     <div class="subtitle">
       Real Layout. Real Speed. Practice the payout math.
     </div>
-
   </div>
-
 </header>
 
 
@@ -656,25 +565,20 @@ input{
   <button
     class="tab active"
     id="dealerTab">
-
     Dealer Math
-
   </button>
-
 
   <button
     class="tab"
     id="boardTab">
-
     Board Math
-
   </button>
 
 </div>
 
 
 <!-- =========================
-     DEALER MATH
+     SECTION 1
 ========================= -->
 
 <section
@@ -697,23 +601,15 @@ input{
     <button
       class="primary"
       id="generateBets">
-
       Generate Bets
-
     </button>
 
-    <button
-      id="showAnswers">
-
+    <button id="showAnswers">
       Show Answers
-
     </button>
 
-    <button
-      id="nextRound">
-
+    <button id="nextRound">
       Next Round
-
     </button>
 
     <div
@@ -727,13 +623,12 @@ input{
 
 
 <!-- =========================
-     BOARD MATH
+     SECTION 2
 ========================= -->
 
 <section
   id="boardPanel"
   class="panel">
-
 
   <div class="card">
 
@@ -742,44 +637,32 @@ input{
     </h2>
 
     <p>
-
       <b>One winning number.</b>
-
       Multiple inside bets can win on that number.
-
-      Look at the numbered chips and calculate the total
-      payout from the bets that cover the winning number.
-
+      Look at the numbered chips and calculate the total payout
+      from the bets that cover the winning number.
       <b>Outside bets are shown but are not included.</b>
-
     </p>
 
 
-    <div class="board-wrap">
+    <!-- BOARD -->
 
+    <div class="board-wrap">
 
       <div
         class="board"
         id="board">
 
-
         <div class="board-title">
-
           How Many Pieces Do I Pay?
-
         </div>
 
-
         <div class="board-sub">
-
           One winning number.<br>
           Multiple bets can win.<br>
           Outside bets are not used.
-
         </div>
 
-
-        <!-- ROULETTE NUMBER GRID -->
 
         <div
           class="roulette-grid"
@@ -836,32 +719,26 @@ input{
 
         </div>
 
-
       </div>
 
     </div>
 
 
     <div class="legend">
-
       Chip number = number of pieces wagered.
       Chip color has no meaning.
-
     </div>
 
   </div>
 
 
-  <!-- =========================
-       ANSWER
-  ========================= -->
+  <!-- ANSWER AREA -->
 
   <div class="card">
 
     <h3>
       How many pieces do you pay out?
     </h3>
-
 
     <input
       id="boardAnswer"
@@ -871,37 +748,24 @@ input{
       placeholder="Enter total pieces..."
     >
 
-
     <button
       class="primary"
       id="checkBoard">
-
       Check Answer
-
     </button>
 
-
-    <button
-      id="showBoardAnswer">
-
+    <button id="showBoardAnswer">
       Show Answer
-
     </button>
 
-
-    <button
-      id="newLayout">
-
+    <button id="newLayout">
       New Layout
-
     </button>
-
 
     <div
       id="boardResult"
       class="result">
     </div>
-
 
     <div
       id="breakdown"
@@ -911,16 +775,13 @@ input{
   </div>
 
 
-  <!-- =========================
-       REFERENCE
-  ========================= -->
+  <!-- BET TYPES -->
 
   <div class="card">
 
     <h3>
       Bet Types on Layout
     </h3>
-
 
     <div class="refgrid">
 
@@ -952,7 +813,6 @@ input{
 
   </div>
 
-
 </section>
 
 </div>
@@ -964,46 +824,39 @@ input{
 
 
 /* =========================
-   HELPERS
+   RANDOM HELPERS
 ========================= */
 
-function pick(array){
-
-  return array[
+function pick(a){
+  return a[
     Math.floor(
-      Math.random() * array.length
+      Math.random()*a.length
     )
-  ];
-
+  ]
 }
 
 
-function shuffle(array){
+function shuffle(a){
 
   for(
-    var i = array.length - 1;
-    i > 0;
+    var i=a.length-1;
+    i>0;
     i--
   ){
 
-    var j =
+    var j=
       Math.floor(
-        Math.random() * (i + 1)
-      );
+        Math.random()*(i+1)
+      )
 
-    var temp =
-      array[i];
+    var t=a[i]
 
-    array[i] =
-      array[j];
-
-    array[j] =
-      temp;
+    a[i]=a[j]
+    a[j]=t
 
   }
 
-  return array;
-
+  return a
 }
 
 
@@ -1011,86 +864,53 @@ function shuffle(array){
    TABS
 ========================= */
 
-var dealerTab =
-  document.getElementById(
-    "dealerTab"
-  );
+var dealerTab=
+  document.getElementById("dealerTab")
 
-var boardTab =
-  document.getElementById(
-    "boardTab"
-  );
+var boardTab=
+  document.getElementById("boardTab")
 
-var dealerPanel =
-  document.getElementById(
-    "dealerPanel"
-  );
+var dealerPanel=
+  document.getElementById("dealerPanel")
 
-var boardPanel =
-  document.getElementById(
-    "boardPanel"
-  );
+var boardPanel=
+  document.getElementById("boardPanel")
 
 
-dealerTab.onclick =
-function(){
+dealerTab.onclick=function(){
 
-  dealerTab.classList.add(
-    "active"
-  );
+  dealerTab.classList.add("active")
 
-  boardTab.classList.remove(
-    "active"
-  );
+  boardTab.classList.remove("active")
 
-  dealerPanel.classList.add(
-    "active"
-  );
+  dealerPanel.classList.add("active")
 
-  boardPanel.classList.remove(
-    "active"
-  );
+  boardPanel.classList.remove("active")
 
-};
+}
 
 
-boardTab.onclick =
-function(){
+boardTab.onclick=function(){
 
-  boardTab.classList.add(
-    "active"
-  );
+  boardTab.classList.add("active")
 
-  dealerTab.classList.remove(
-    "active"
-  );
+  dealerTab.classList.remove("active")
 
-  boardPanel.classList.add(
-    "active"
-  );
+  boardPanel.classList.add("active")
 
-  dealerPanel.classList.remove(
-    "active"
-  );
+  dealerPanel.classList.remove("active")
 
+  if(!boardBets.length)
+    newBoardLayout()
 
-  if(
-    !boardBets.length
-  ){
-
-    newBoardLayout();
-
-  }
-
-};
+}
 
 
 /* =========================
-   DEALER MATH
+   SECTION 1
 ========================= */
 
-var stakes = [
-
+var stakes=[
   5,
   10,
   15,
@@ -1098,11 +918,10 @@ var stakes = [
   25,
   50,
   100
+]
 
-];
 
-
-var betTypes = [
+var betTypes=[
 
   {
     name:"Straight Up",
@@ -1154,470 +973,359 @@ var betTypes = [
     mult:2
   }
 
-];
+]
 
 
-var dealerBets = [];
+var dealerBets=[]
 
 
 function makeDealerBet(){
 
-  var t =
-    pick(betTypes);
+  var t=pick(betTypes)
 
-  var label =
-    t.name;
+  var label=t.name
 
 
-  if(
-    t.name === "Straight Up"
-  ){
+  if(t.name==="Straight Up"){
 
-    label +=
-      " " +
+    label+=" "+pick(
+      Array.from(
+        {length:36},
+        function(_,i){
+          return i+1
+        }
+      )
+    )
+
+  }
+
+
+  if(t.name==="Split"){
+
+    var n=
       pick(
         Array.from(
-          {
-            length:36
-          },
+          {length:35},
           function(_,i){
-            return i + 1;
+            return i+1
           }
         )
-      );
+      )
+
+    label+=
+      " "+n+
+      " / "+(n+1)
 
   }
 
 
-  if(
-    t.name === "Split"
-  ){
+  if(t.name==="Street"){
 
-    var n =
+    var n2=
       pick(
         Array.from(
-          {
-            length:35
-          },
+          {length:12},
           function(_,i){
-            return i + 1;
+            return i*3+1
           }
         )
-      );
+      )
 
-    label +=
-      " " +
-      n +
-      " / " +
-      (n + 1);
+    label+=
+      " "+n2+
+      "-"+(n2+2)
 
   }
 
 
-  if(
-    t.name === "Street"
-  ){
+  if(t.name==="Corner"){
 
-    var n2 =
+    var c=
       pick(
         Array.from(
-          {
-            length:12
-          },
+          {length:11},
           function(_,i){
-            return i * 3 + 1;
+            return i
           }
         )
-      );
+      )
 
-    label +=
-      " " +
-      n2 +
-      "-" +
-      (n2 + 2);
+    var r=
+      pick([0,1])
+
+    var a=
+      c*3+r+1
+
+    label=
+      t.name+
+      " "+
+      a+
+      ", "+
+      (a+1)+
+      ", "+
+      (a+3)+
+      ", "+
+      (a+4)
 
   }
 
 
-  if(
-    t.name === "Corner"
-  ){
+  if(t.name==="Six Line"){
 
-    var c =
+    var s=
       pick(
         Array.from(
-          {
-            length:11
-          },
+          {length:11},
           function(_,i){
-            return i;
+            return i*3+1
           }
         )
-      );
+      )
 
-    var r =
-      pick([0,1]);
-
-    var a =
-      c * 3 +
-      r +
-      1;
-
-    label +=
-      " " +
-      a +
-      ", " +
-      (a + 1) +
-      ", " +
-      (a + 3) +
-      ", " +
-      (a + 4);
+    label+=
+      " "+s+
+      "-"+(s+5)
 
   }
 
 
-  if(
-    t.name === "Six Line"
-  ){
-
-    var s =
-      pick(
-        Array.from(
-          {
-            length:11
-          },
-          function(_,i){
-            return i * 3 + 1;
-          }
-        )
-      );
-
-    label +=
-      " " +
-      s +
-      "-" +
-      (s + 5);
-
-  }
+  if(t.name==="Red / Black")
+    label=pick([
+      "Red",
+      "Black"
+    ])
 
 
-  if(
-    t.name === "Red / Black"
-  ){
-
-    label =
-      pick([
-        "Red",
-        "Black"
-      ]);
-
-  }
+  if(t.name==="Odd / Even")
+    label=pick([
+      "Odd",
+      "Even"
+    ])
 
 
-  if(
-    t.name === "Odd / Even"
-  ){
-
-    label =
-      pick([
-        "Odd",
-        "Even"
-      ]);
-
-  }
+  if(t.name==="1–18 / 19–36")
+    label=pick([
+      "1–18",
+      "19–36"
+    ])
 
 
-  if(
-    t.name === "1–18 / 19–36"
-  ){
-
-    label =
-      pick([
-        "1–18",
-        "19–36"
-      ]);
-
-  }
+  if(t.name==="Dozen")
+    label=pick([
+      "1st 12",
+      "2nd 12",
+      "3rd 12"
+    ])
 
 
-  if(
-    t.name === "Dozen"
-  ){
-
-    label =
-      pick([
-        "1st 12",
-        "2nd 12",
-        "3rd 12"
-      ]);
-
-  }
+  if(t.name==="Column")
+    label=
+      "Column "+
+      pick([1,2,3])
 
 
-  if(
-    t.name === "Column"
-  ){
-
-    label =
-      "Column " +
-      pick([1,2,3]);
-
-  }
-
-
-  var stake =
-    pick(stakes);
+  var stake=pick(stakes)
 
 
   return{
-
     label:label,
-
     mult:t.mult,
-
     stake:stake,
-
-    winnings:
-      stake * t.mult
-
-  };
+    winnings:stake*t.mult
+  }
 
 }
 
 
 function renderDealer(show){
 
-  var box =
+  var box=
     document.getElementById(
       "dealerBets"
-    );
+    )
 
-  box.innerHTML = "";
+  box.innerHTML=""
 
 
   dealerBets.forEach(
-    function(b,index){
+    function(b,i){
 
-      var d =
+      var d=
         document.createElement(
           "div"
-        );
+        )
 
-      d.className =
-        "bet";
+      d.className="bet"
 
 
-      d.innerHTML =
-        "<b>" +
-        (index + 1) +
-        ". " +
-        b.label +
-        "</b> — $" +
-        b.stake +
+      d.innerHTML=
+        "<b>"+
+        (i+1)+
+        ". "+
+        b.label+
+        "</b> — $"+
+        b.stake+
+
         (
           show
           ?
-          '<div class="answer">' +
-          "Winnings: $" +
-          b.winnings +
+          '<div class="answer">Winnings: $'+
+          b.winnings+
           "</div>"
+
           :
+
           "<div>Calculate the winnings.</div>"
-        );
+        )
 
 
-      box.appendChild(d);
+      box.appendChild(d)
 
     }
-  );
+  )
 
 }
 
 
 function generateDealerBets(){
 
-  dealerBets = [];
-
-
-  var numberOfBets =
-    4 +
-    Math.floor(
-      Math.random() * 4
-    );
+  dealerBets=[]
 
 
   for(
-    var i = 0;
-    i < numberOfBets;
+    var i=0,
+    n=4+
+      Math.floor(
+        Math.random()*4
+      );
+
+    i<n;
+
     i++
   ){
 
     dealerBets.push(
       makeDealerBet()
-    );
+    )
 
   }
 
 
-  renderDealer(false);
+  renderDealer(false)
 
-
-  document
-    .getElementById(
-      "dealerStatus"
-    )
-    .textContent = "";
+  document.getElementById(
+    "dealerStatus"
+  ).textContent=""
 
 }
 
 
-document
-  .getElementById(
-    "generateBets"
-  )
-  .onclick =
-  generateDealerBets;
+document.getElementById(
+  "generateBets"
+).onclick=
+  generateDealerBets
 
 
-document
-  .getElementById(
-    "showAnswers"
-  )
-  .onclick =
+document.getElementById(
+  "showAnswers"
+).onclick=
   function(){
-
-    renderDealer(true);
-
-  };
+    renderDealer(true)
+  }
 
 
-document
-  .getElementById(
-    "nextRound"
-  )
-  .onclick =
-  generateDealerBets;
+document.getElementById(
+  "nextRound"
+).onclick=
+  generateDealerBets
 
 
 /* =========================
    AMERICAN ROULETTE BOARD
 ========================= */
 
-var redNumbers =
+var redNumbers=
   new Set([
-
-    1,
-    3,
-    5,
-    7,
-    9,
-
-    12,
-    14,
-    16,
-    18,
-
-    19,
-    21,
-    23,
-    25,
-    27,
-
-    30,
-    32,
-    34,
-    36
-
-  ]);
+    1,3,5,7,9,
+    12,14,16,18,
+    19,21,23,25,
+    27,30,32,34,36
+  ])
 
 
 function buildBoard(){
 
-  var g =
+  var g=
     document.getElementById(
       "rouletteGrid"
-    );
+    )
 
-
-  g.innerHTML = "";
+  g.innerHTML=""
 
 
   /* 00 */
 
-  var zz =
+  var zz=
     document.createElement(
       "div"
-    );
+    )
 
-  zz.className =
-    "cell zero";
+  zz.className=
+    "cell zero"
 
-  zz.textContent =
-    "00";
+  zz.textContent="00"
 
-  g.appendChild(zz);
+  g.appendChild(zz)
 
 
-  /*
-    Actual American roulette
-    number arrangement:
-
-    3  6  9  12 15 ...
-    2  5  8  11 14 ...
-    1  4  7  10 13 ...
-  */
-
+  /* NUMBER GRID */
 
   for(
-    var row = 0;
-    row < 3;
+    var row=0;
+    row<3;
     row++
   ){
 
     for(
-      var col = 0;
-      col < 12;
+      var col=0;
+      col<12;
       col++
     ){
 
-      var num =
-        col * 3 +
-        (3 - row);
+      var num=
+        col*3+
+        (3-row)
 
 
-      var cell =
+      var cell=
         document.createElement(
           "div"
-        );
+        )
 
 
-      cell.className =
-        "cell number " +
+      cell.className=
+        "cell number "+
         (
           redNumbers.has(num)
           ?
           "red"
           :
           "black"
-        );
+        )
 
 
-      cell.textContent =
-        num;
+      cell.textContent=num
+
+      cell.dataset.number=num
+
+      cell.style.gridColumn=
+        col+2
+
+      cell.style.gridRow=
+        row+1
 
 
-      cell.dataset.number =
-        num;
-
-
-      cell.style.gridColumn =
-        col + 2;
-
-      cell.style.gridRow =
-        row + 1;
-
-
-      g.appendChild(cell);
+      g.appendChild(cell)
 
     }
 
@@ -1626,249 +1334,198 @@ function buildBoard(){
 
   /* 0 */
 
-  var z =
+  var z=
     document.createElement(
       "div"
-    );
+    )
 
-  z.className =
-    "cell zero0";
+  z.className=
+    "cell zero0"
 
-  z.textContent =
-    "0";
+  z.textContent="0"
 
-  g.appendChild(z);
+  g.appendChild(z)
 
 
-  /* RIGHT SIDE 2 TO 1 */
+  /* 2 TO 1 */
 
   for(
-    var r = 0;
-    r < 3;
+    var r=0;
+    r<3;
     r++
   ){
 
-    var t =
+    var t=
       document.createElement(
         "div"
-      );
+      )
 
-    t.className =
-      "cell twoto1";
+    t.className=
+      "cell twoto1"
 
-    t.textContent =
-      "2 to 1";
+    t.textContent=
+      "2 to 1"
 
+    t.style.gridColumn="14"
 
-    t.style.gridColumn =
-      "14";
+    t.style.gridRow=
+      r+1
 
-
-    t.style.gridRow =
-      r + 1;
-
-
-    g.appendChild(t);
+    g.appendChild(t)
 
   }
 
 }
 
 
-buildBoard();
+buildBoard()
 
 
 /* =========================
    BOARD VARIABLES
 ========================= */
 
-var boardBets = [];
+var boardBets=[]
 
-var boardTotal = 0;
+var boardTotal=0
 
-var winningNumber = 0;
+var winningNumber=0
 
 
 /* =========================
-   INSIDE BET GENERATION
+   VALID INSIDE BETS
 ========================= */
 
 function insideCandidates(n){
 
-  var out = [];
+  var out=[]
 
 
-  /*
-    STRAIGHT UP
-  */
+  /* STRAIGHT UP */
 
   out.push({
-
     type:"straight",
-
     mult:35,
-
     n:n,
-
-    desc:
-      "Straight Up " +
-      n
-
-  });
+    desc:"Straight Up "+n
+  })
 
 
-  /*
-    SPLITS
-  */
+  /* SPLITS */
 
   for(
-    var c = 0;
-    c < 12;
+    var c=0;
+    c<12;
     c++
   ){
 
     for(
-      var row = 0;
-      row < 3;
+      var row=0;
+      row<3;
       row++
     ){
 
-      var here =
-        c * 3 +
-        (3 - row);
+      var here=
+        c*3+
+        (3-row)
 
 
-      if(
-        here !== n
-      ){
+      if(here!==n)
+        continue
 
-        continue;
+
+      /* Right */
+
+      if(c<11){
+
+        out.push({
+          type:"split",
+          mult:17,
+          a:n,
+          b:
+            (c+1)*3+
+            (3-row),
+          desc:
+            "Split "+
+            n+
+            " / "+
+            (
+              (c+1)*3+
+              (3-row)
+            )
+        })
 
       }
 
 
-      /* Horizontal right */
+      /* Left */
 
-      if(
-        c < 11
-      ){
-
-        var right =
-          (c + 1) * 3 +
-          (3 - row);
-
+      if(c>0){
 
         out.push({
-
           type:"split",
-
           mult:17,
-
           a:n,
-
-          b:right,
-
+          b:
+            (c-1)*3+
+            (3-row),
           desc:
-            "Split " +
-            n +
-            " / " +
-            right
-
-        });
+            "Split "+
+            n+
+            " / "+
+            (
+              (c-1)*3+
+              (3-row)
+            )
+        })
 
       }
 
 
-      /* Horizontal left */
+      /* Up */
 
-      if(
-        c > 0
-      ){
-
-        var left =
-          (c - 1) * 3 +
-          (3 - row);
-
+      if(row<2){
 
         out.push({
-
           type:"split",
-
           mult:17,
-
           a:n,
-
-          b:left,
-
+          b:
+            c*3+
+            (2-row),
           desc:
-            "Split " +
-            n +
-            " / " +
-            left
-
-        });
+            "Split "+
+            n+
+            " / "+
+            (
+              c*3+
+              (2-row)
+            )
+        })
 
       }
 
 
-      /* Vertical */
+      /* Down */
 
-      if(
-        row < 2
-      ){
-
-        var down =
-          c * 3 +
-          (2 - row);
-
+      if(row>0){
 
         out.push({
-
           type:"split",
-
           mult:17,
-
           a:n,
-
-          b:down,
-
+          b:
+            c*3+
+            (4-row),
           desc:
-            "Split " +
-            n +
-            " / " +
-            down
-
-        });
-
-      }
-
-
-      if(
-        row > 0
-      ){
-
-        var up =
-          c * 3 +
-          (4 - row);
-
-
-        out.push({
-
-          type:"split",
-
-          mult:17,
-
-          a:n,
-
-          b:up,
-
-          desc:
-            "Split " +
-            n +
-            " / " +
-            up
-
-        });
+            "Split "+
+            n+
+            " / "+
+            (
+              c*3+
+              (4-row)
+            )
+        })
 
       }
 
@@ -1877,99 +1534,74 @@ function insideCandidates(n){
   }
 
 
-  /*
-    STREET
-  */
+  /* STREET */
 
-  var streetStart =
+  var streetStart=
     Math.floor(
-      (n - 1) / 3
-    ) * 3 + 1;
+      (n-1)/3
+    )*3+1
 
 
   out.push({
-
     type:"street",
-
     mult:11,
-
     start:streetStart,
-
     desc:
-      "Street " +
-      streetStart +
-      "–" +
-      (streetStart + 2)
+      "Street "+
+      streetStart+
+      "–"+
+      (streetStart+2)
+  })
 
-  });
 
+  /* CORNERS */
 
-  /*
-    CORNERS
-  */
-
-  var col =
+  var col=
     Math.floor(
-      (n - 1) / 3
-    );
+      (n-1)/3
+    )
+
+  var rowIndex=
+    (n-1)%3
 
 
   for(
-    var cc =
-      Math.max(0,col - 1);
+    var cc=
+      Math.max(0,col-1);
 
-    cc <=
+    cc<=
       Math.min(10,col);
 
     cc++
   ){
 
     for(
-      var rr = 0;
-      rr <= 1;
+      var rr=0;
+      rr<=1;
       rr++
     ){
 
-      var nums = [
-
-        cc * 3 +
-        rr +
-        1,
-
-        cc * 3 +
-        rr +
-        2,
-
-        cc * 3 +
-        rr +
-        4,
-
-        cc * 3 +
-        rr +
-        5
-
-      ];
+      var nums=[
+        cc*3+rr+1,
+        cc*3+rr+2,
+        cc*3+rr+4,
+        cc*3+rr+5
+      ]
 
 
       if(
-        nums.indexOf(n) >= 0
+        nums.indexOf(n)>=0
       ){
 
         out.push({
-
           type:"corner",
-
           mult:8,
-
           col:cc,
-
           row:rr,
-
           desc:
-            "Corner " +
+            "Corner "+
             nums.join(", ")
-
-        });
+        })
 
       }
 
@@ -1978,113 +1610,96 @@ function insideCandidates(n){
   }
 
 
-  /*
-    SIX LINE
-  */
+  /* SIX LINE */
 
-  var sixStart =
+  var sixStart=
     Math.floor(
-      (n - 1) / 6
-    ) * 6 + 1;
+      (n-1)/6
+    )*6+1
 
 
-  if(
-    sixStart <= 31
-  ){
+  if(sixStart<=31){
 
     out.push({
-
       type:"sixline",
-
       mult:5,
-
       start:sixStart,
-
       desc:
-        "Six Line " +
-        sixStart +
-        "–" +
-        (sixStart + 5)
-
-    });
+        "Six Line "+
+        sixStart+
+        "–"+
+        (sixStart+5)
+    })
 
   }
 
 
-  return out;
+  return out
 
 }
 
 
 /* =========================
-   BET KEY
+   BET UNIQUE KEY
 ========================= */
 
-function betKey(b){
+function key(b){
 
-  return [
-
-    b.type,
-    b.n,
-    b.a,
-    b.b,
-    b.start,
-    b.col,
-    b.row
-
-  ].join("|");
+  return(
+    b.type+
+    "|"+
+    [
+      b.n,
+      b.a,
+      b.b,
+      b.start,
+      b.col,
+      b.row
+    ].join("|")
+  )
 
 }
 
 
 /* =========================
-   FIND CELL CENTER
+   FIND NUMBER CELL
 ========================= */
 
 function cellCenter(n){
 
-  var el =
+  var el=
     document.querySelector(
-      '.cell.number[data-number="' +
-      n +
+      '.cell.number[data-number="'+
+      n+
       '"]'
-    );
+    )
 
 
-  if(!el){
-
-    return null;
-
-  }
+  if(!el)
+    return null
 
 
-  var board =
-    document.getElementById(
-      "board"
-    );
+  var br=
+    document
+      .getElementById("board")
+      .getBoundingClientRect()
 
 
-  var br =
-    board.getBoundingClientRect();
-
-
-  var r =
-    el.getBoundingClientRect();
+  var r=
+    el.getBoundingClientRect()
 
 
   return{
-
     x:
-      r.left -
-      br.left +
-      r.width / 2,
+      r.left-
+      br.left+
+      r.width/2,
 
     y:
-      r.top -
-      br.top +
-      r.height / 2
-
-  };
+      r.top-
+      br.top+
+      r.height/2
+  }
 
 }
 
@@ -2096,65 +1711,57 @@ function cellCenter(n){
 function addChipXY(
   x,
   y,
-  count
+  count,
+  index
 ){
 
-  var board =
-    document.getElementById(
-      "board"
-    );
-
-
-  var br =
-    board.getBoundingClientRect();
-
-
-  var chip =
+  var chip=
     document.createElement(
       "div"
-    );
+    )
+
+  chip.className=
+    "chip c"+
+    (index%6)
 
 
-  chip.className =
-    "chip";
+  var br=
+    document
+      .getElementById("board")
+      .getBoundingClientRect()
 
 
-  chip.style.left =
+  chip.style.left=
     (
-      x /
-      br.width *
+      x/
+      br.width*
       100
-    ) +
-    "%";
+    )+
+    "%"
 
 
-  chip.style.top =
+  chip.style.top=
     (
-      y /
-      br.height *
+      y/
+      br.height*
       100
-    ) +
-    "%";
+    )+
+    "%"
 
 
-  var span =
+  var s=
     document.createElement(
       "span"
-    );
+    )
+
+  s.textContent=count
+
+  chip.appendChild(s)
 
 
-  span.textContent =
-    count;
-
-
-  chip.appendChild(
-    span
-  );
-
-
-  board.appendChild(
-    chip
-  );
+  document
+    .getElementById("board")
+    .appendChild(chip)
 
 }
 
@@ -2171,857 +1778,156 @@ function clearChips(){
     )
     .forEach(
       function(x){
-
-        x.remove();
-
+        x.remove()
       }
-    );
+    )
 
 }
 
 
 /* =========================
-   BET CENTER
+   BET LOCATION
 ========================= */
 
 function basePoint(b){
 
+  /* Straight */
+
   if(
-    b.type === "straight"
+    b.type==="straight"
   ){
 
-    return cellCenter(
-      b.n
-    );
+    return cellCenter(b.n)
 
   }
 
 
+  /* Split */
+
   if(
-    b.type === "split"
+    b.type==="split"
   ){
 
-    var a =
-      cellCenter(b.a);
+    var a=
+      cellCenter(b.a)
 
-    var c =
-      cellCenter(b.b);
+    var c=
+      cellCenter(b.b)
 
 
     return{
-
       x:
-        (a.x + c.x) / 2,
+        (a.x+c.x)/2,
 
       y:
-        (a.y + c.y) / 2
-
-    };
+        (a.y+c.y)/2
+    }
 
   }
 
 
+  /* Street */
+
   if(
-    b.type === "street"
+    b.type==="street"
   ){
 
-    var a1 =
-      cellCenter(
-        b.start
-      );
+    var a1=
+      cellCenter(b.start)
 
-    var a2 =
+    var a2=
       cellCenter(
-        b.start + 2
-      );
+        b.start+2
+      )
 
 
     return{
-
       x:
-        (a1.x + a2.x) / 2,
+        (a1.x+a2.x)/2,
 
-      y:
-        a1.y
-
-    };
+      y:a1.y
+    }
 
   }
 
 
+  /* Corner */
+
   if(
-    b.type === "corner"
+    b.type==="corner"
   ){
 
-    var n1 =
-      b.col * 3 +
-      b.row +
-      1;
+    var n1=
+      b.col*3+
+      b.row+
+      1
 
-    var n4 =
-      n1 + 4;
+    var n2=
+      n1+1
+
+    var n3=
+      n1+3
+
+    var n4=
+      n1+4
 
 
-    var p1 =
-      cellCenter(n1);
+    var a=
+      cellCenter(n1)
 
-    var p4 =
-      cellCenter(n4);
+    var c=
+      cellCenter(n4)
 
 
     return{
-
       x:
-        (p1.x + p4.x) / 2,
+        (a.x+c.x)/2,
 
       y:
-        (p1.y + p4.y) / 2
-
-    };
+        (a.y+c.y)/2
+    }
 
   }
 
 
+  /* Six Line */
+
   if(
-    b.type === "sixline"
+    b.type==="sixline"
   ){
 
-    var l1 =
+    var a3=
+      cellCenter(b.start)
+
+    var c3=
       cellCenter(
-        b.start
-      );
-
-    var l6 =
-      cellCenter(
-        b.start + 5
-      );
-
-
-    var board =
-      document.getElementById(
-        "board"
-      );
-
-
-    var br =
-      board.getBoundingClientRect();
+        b.start+5
+      )
 
 
     return{
-
       x:
-        (l1.x + l6.x) / 2,
+        (a3.x+c3.x)/2,
 
       y:
-        l1.y +
-        br.height * .07
-
-    };
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================
-   WINNING NUMBER HIGHLIGHT
-========================= */
-
-function placeWinner(){
-
-  var el =
-    document.querySelector(
-      '.cell.number[data-number="' +
-      winningNumber +
-      '"]'
-    );
-
-
-  if(!el){
-
-    return;
-
-  }
-
-
-  var board =
-    document.getElementById(
-      "board"
-    );
-
-
-  var br =
-    board.getBoundingClientRect();
-
-
-  var r =
-    el.getBoundingClientRect();
-
-
-  var w =
-    document.createElement(
-      "div"
-    );
-
-
-  w.className =
-    "winner";
-
-
-  w.style.left =
-    (
-      r.left -
-      br.left
-    ) +
-    "px";
-
-
-  w.style.top =
-    (
-      r.top -
-      br.top
-    ) +
-    "px";
-
-
-  w.style.width =
-    r.width +
-    "px";
-
-
-  w.style.height =
-    r.height +
-    "px";
-
-
-  board.appendChild(w);
-
-}
-
-
-/* =========================
-   PLACE CHIPS
-========================= */
-
-function placeChips(){
-
-  var board =
-    document.getElementById(
-      "board"
-    );
-
-
-  var br =
-    board.getBoundingClientRect();
-
-
-  /*
-    Each bet gets a different
-    small offset so the chips
-    remain readable.
-  */
-
-  var offsets = [
-
-    [0,-.055],
-
-    [-.055,0],
-
-    [.055,0],
-
-    [0,.055],
-
-    [-.045,.045],
-
-    [.045,.045]
-
-  ];
-
-
-  boardBets.forEach(
-
-    function(b,i){
-
-      var p =
-        basePoint(b);
-
-
-      if(!p){
-
-        return;
-
-      }
-
-
-      var dx =
-        br.width *
-        offsets[i][0];
-
-
-      var dy =
-        br.height *
-        offsets[i][1];
-
-
-      addChipXY(
-
-        p.x + dx,
-
-        p.y + dy,
-
-        b.count
-
-      );
-
-    }
-
-  );
-
-}
-
-
-/* =========================
-   BREAKDOWN
-========================= */
-
-function renderBreakdown(){
-
-  var box =
-    document.getElementById(
-      "breakdown"
-    );
-
-
-  box.innerHTML =
-    "";
-
-
-  var head =
-    document.createElement(
-      "div"
-    );
-
-
-  head.className =
-    "breakdown-row breakdown-head";
-
-
-  head.innerHTML =
-
-    "<div>Bet</div>" +
-
-    "<div>Chips</div>" +
-
-    "<div>Odds</div>" +
-
-    "<div>Winnings</div>";
-
-
-  box.appendChild(
-    head
-  );
-
-
-  boardBets.forEach(
-
-    function(b){
-
-      var row =
-        document.createElement(
-          "div"
-        );
-
-
-      row.className =
-        "breakdown-row";
-
-
-      row.innerHTML =
-
-        "<div>" +
-        b.desc +
-        "</div>" +
-
-        "<div>" +
-        b.count +
-        "</div>" +
-
-        "<div>" +
-        b.mult +
-        " to 1</div>" +
-
-        "<div>" +
-        (b.count * b.mult) +
-        "</div>";
-
-
-      box.appendChild(
-        row
-      );
-
-    }
-
-  );
-
-
-  var total =
-    document.createElement(
-      "div"
-    );
-
-
-  total.className =
-    "breakdown-row";
-
-
-  total.innerHTML =
-
-    "<div><b>Total</b></div>" +
-
-    "<div></div>" +
-
-    "<div></div>" +
-
-    "<div><b>" +
-    boardTotal +
-    "</b></div>";
-
-
-  box.appendChild(
-    total
-  );
-
-}
-
-
-/* =========================
-   NEW BOARD LAYOUT
-========================= */
-
-function newBoardLayout(){
-
-  clearChips();
-
-
-  boardBets = [];
-
-  boardTotal = 0;
-
-
-  document
-    .getElementById(
-      "boardAnswer"
-    )
-    .value = "";
-
-
-  document
-    .getElementById(
-      "boardResult"
-    )
-    .textContent = "";
-
-
-  document
-    .getElementById(
-      "boardResult"
-    )
-    .className =
-    "result";
-
-
-  document
-    .getElementById(
-      "breakdown"
-    )
-    .className =
-    "breakdown";
-
-
-  /*
-    Winning number:
-    RANDOM 1–25 ONLY
-  */
-
-  winningNumber =
-    pick(
-      Array.from(
-        {
-          length:25
-        },
-        function(_,i){
-
-          return i + 1;
-
-        }
-      )
-    );
-
-
-  /*
-    Generate all legal inside
-    bets covering that number.
-  */
-
-  var candidates =
-    shuffle(
-      insideCandidates(
-        winningNumber
-      )
-    );
-
-
-  /*
-    Try to get different
-    bet types first.
-  */
-
-  var preferred = [
-
-    "straight",
-    "split",
-    "street",
-    "corner",
-    "sixline"
-
-  ];
-
-
-  for(
-    var p = 0;
-    p < preferred.length;
-    p++
-  ){
-
-    var found =
-      candidates.find(
-
-        function(b){
-
-          return (
-
-            b.type ===
-            preferred[p]
-
-            &&
-
-            !boardBets.some(
-              function(x){
-
-                return (
-                  betKey(x) ===
-                  betKey(b)
-                );
-
-              }
-            )
-
-          );
-
-        }
-
-      );
-
-
-    if(found){
-
-      boardBets.push(
-        found
-      );
-
+        a3.y+
+        document
+          .getElementById("board")
+          .getBoundingClientRect()
+          .height*
+        .07
     }
 
   }
 
 
-  /*
-    Add additional valid
-    inside bets so there are
-    multiple bets every round.
-  */
-
-  for(
-    var i = 0;
-
-    i < candidates.length &&
-    boardBets.length < 6;
-
-    i++
-  ){
-
-    if(
-      !boardBets.some(
-
-        function(x){
-
-          return (
-            betKey(x) ===
-            betKey(
-              candidates[i]
-            )
-          );
-
-        }
-
-      )
-    ){
-
-      boardBets.push(
-        candidates[i]
-      );
-
-    }
-
-  }
-
-
-  boardBets =
-    boardBets.slice(
-      0,
-      6
-    );
-
-
-  /*
-    Random chip counts.
-    Maximum = 25.
-  */
-
-  var chipCounts = [
-
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    10,
-    12,
-    15,
-    18,
-    20,
-    22,
-    25
-
-  ];
-
-
-  boardBets.forEach(
-
-    function(b){
-
-      b.count =
-        pick(
-          chipCounts
-        );
-
-
-      boardTotal +=
-        b.count *
-        b.mult;
-
-    }
-
-  );
-
-
-  /*
-    Wait until the browser
-    finishes rendering before
-    measuring the board cells.
-  */
-
-  requestAnimationFrame(
-
-    function(){
-
-      placeWinner();
-
-      placeChips();
-
-    }
-
-  );
+  return null
 
 }
 
 
 /* =========================
-   CHECK ANSWER
+   WINNER HIGHLIGHT
 ========================= */
 
-document
-  .getElementById(
-    "checkBoard"
-  )
-  .onclick =
-  function(){
-
-    var input =
-      document.getElementById(
-        "boardAnswer"
-      );
-
-
-    var result =
-      document.getElementById(
-        "boardResult"
-      );
-
-
-    var value =
-      Number(
-        input.value
-      );
-
-
-    if(
-      input.value === ""
-    ){
-
-      result.className =
-        "result bad";
-
-      result.textContent =
-        "Enter your total first.";
-
-      return;
-
-    }
-
-
-    if(
-      value ===
-      boardTotal
-    ){
-
-      result.className =
-        "result good";
-
-      result.textContent =
-        "Correct — " +
-        boardTotal +
-        " pieces.";
-
-    }else{
-
-      result.className =
-        "result bad";
-
-      result.textContent =
-        "Not quite. Try again.";
-
-    }
-
-  };
-
-
-/* =========================
-   SHOW ANSWER
-========================= */
-
-document
-  .getElementById(
-    "showBoardAnswer"
-  )
-  .onclick =
-  function(){
-
-    var result =
-      document.getElementById(
-        "boardResult"
-      );
-
-
-    result.className =
-      "result good";
-
-
-    result.textContent =
-
-      "Winning Number: " +
-      winningNumber +
-      " — Answer: " +
-      boardTotal +
-      " pieces.";
-
-
-    renderBreakdown();
-
-
-    document
-      .getElementById(
-        "breakdown"
-      )
-      .classList.add(
-        "show"
-      );
-
-  };
-
-
-/* =========================
-   NEW LAYOUT BUTTON
-========================= */
-
-document
-  .getElementById(
-    "newLayout"
-  )
-  .onclick =
-  newBoardLayout;
-
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-generateDealerBets();
-
-newBoardLayout();
-
-
-/* =========================
-   IPHONE ROTATION / RESIZE
-========================= */
-
-window.addEventListener(
-
-  "resize",
-
-  function(){
-
-    if(
-      boardBets.length
-    ){
-
-      clearChips();
-
-
-      requestAnimationFrame(
-
-        function(){
-
-          placeWinner();
-
-          placeChips();
-
-        }
-
-      );
-
-    }
-
-  }
-
-);
-
-</script>
-
-</body>
-</html>
+function
