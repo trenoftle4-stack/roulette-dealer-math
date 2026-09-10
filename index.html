@@ -110,7 +110,9 @@ color:#fff;
 background:#304c68
 }
 
-button.primary{background:#08b957}
+button.primary{
+background:#08b957
+}
 
 input{
 width:100%;
@@ -296,7 +298,6 @@ box-shadow:
 0 0 0 2px #222;
 
 z-index:20;
-
 transform:translate(-50%,-50%)
 }
 
@@ -334,17 +335,9 @@ opacity:.95
 content:"";
 position:absolute;
 inset:15%;
-
-border:2px solid color-mix(
-in srgb,
-var(--chip) 72%,
-#000
-);
-
+border:2px solid #222;
 border-radius:50%;
-
-box-shadow:
-inset 0 0 0 1px #fff
+box-shadow:inset 0 0 0 1px #fff
 }
 
 .chip span{
@@ -403,7 +396,9 @@ overflow:hidden;
 display:none
 }
 
-.breakdown.show{display:block}
+.breakdown.show{
+display:block
+}
 
 .breakdown-row{
 display:grid;
@@ -439,22 +434,34 @@ background:#142638
 
 @media(max-width:600px){
 
-.app{padding:8px}
+.app{
+padding:8px
+}
 
-.logo{font-size:34px}
+.logo{
+font-size:34px
+}
 
-.subtitle{font-size:13px}
+.subtitle{
+font-size:13px
+}
 
-.card{padding:12px}
+.card{
+padding:12px
+}
 
-.card p{font-size:14px}
+.card p{
+font-size:14px
+}
 
 .tab{
 font-size:16px;
 padding:14px 6px
 }
 
-.board{border-width:7px}
+.board{
+border-width:7px
+}
 
 .breakdown-row{
 font-size:11px
@@ -808,8 +815,23 @@ boardPanel.classList.add("active")
 
 dealerPanel.classList.remove("active")
 
-if(!boardBets.length)
+if(!boardBets.length){
+
 newBoardLayout()
+
+}else{
+
+requestAnimationFrame(function(){
+
+clearChips()
+
+placeWinner()
+
+placeChips()
+
+})
+
+}
 
 }
 
@@ -857,6 +879,7 @@ var label=t.name
 
 
 if(t.name==="Straight Up")
+
 label+=" "+
 pick(
 Array.from(
@@ -880,9 +903,7 @@ return i+1
 )
 )
 
-label+=
-" "+n+
-" / "+(n+1)
+label+=" "+n+" / "+(n+1)
 
 }
 
@@ -899,9 +920,7 @@ return i*3+1
 )
 )
 
-label+=
-" "+n2+
-"-"+(n2+2)
+label+=" "+n2+"-"+(n2+2)
 
 }
 
@@ -918,20 +937,14 @@ return i
 )
 )
 
-var r=
-pick([0,1])
+var r=pick([0,1])
 
-var a=
-c*3+r+1
+var a=c*3+r+1
 
-label=
-"Corner "+
-a+
-", "+
-(a+1)+
-", "+
-(a+3)+
-", "+
+label+=" "+
+a+", "+
+(a+1)+", "+
+(a+3)+", "+
 (a+4)
 
 }
@@ -949,14 +962,13 @@ return i*3+1
 )
 )
 
-label+=
-" "+s+
-"-"+(s+5)
+label+=" "+s+"-"+(s+5)
 
 }
 
 
 if(t.name==="Red / Black")
+
 label=pick([
 "Red",
 "Black"
@@ -964,6 +976,7 @@ label=pick([
 
 
 if(t.name==="Odd / Even")
+
 label=pick([
 "Odd",
 "Even"
@@ -971,6 +984,7 @@ label=pick([
 
 
 if(t.name==="1–18 / 19–36")
+
 label=pick([
 "1–18",
 "19–36"
@@ -978,6 +992,7 @@ label=pick([
 
 
 if(t.name==="Dozen")
+
 label=pick([
 "1st 12",
 "2nd 12",
@@ -986,13 +1001,12 @@ label=pick([
 
 
 if(t.name==="Column")
-label=
-"Column "+
+
+label="Column "+
 pick([1,2,3])
 
 
 var stake=pick(stakes)
-
 
 return{
 label:label,
@@ -1007,51 +1021,36 @@ winnings:stake*t.mult
 function renderDealer(show){
 
 var box=
-document.getElementById(
-"dealerBets"
-)
+document.getElementById("dealerBets")
 
 box.innerHTML=""
 
-
-dealerBets.forEach(
-function(b,i){
+dealerBets.forEach(function(b,i){
 
 var d=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 d.className="bet"
 
-
 d.innerHTML=
 "<b>"+
-(i+1)+
-". "+
+(i+1)+". "+
 b.label+
 "</b> — $"+
 b.stake+
-
 (
 show
-
 ?
-
 '<div class="answer">Winnings: $'+
 b.winnings+
 "</div>"
-
 :
-
 "<div>Calculate the winnings.</div>"
 )
 
-
 box.appendChild(d)
 
-}
-)
+})
 
 }
 
@@ -1060,17 +1059,15 @@ function generateDealerBets(){
 
 dealerBets=[]
 
-
-for(
-var i=0,
-n=
+var n=
 4+
 Math.floor(
 Math.random()*4
-);
+)
 
+for(
+var i=0;
 i<n;
-
 i++
 ){
 
@@ -1079,7 +1076,6 @@ makeDealerBet()
 )
 
 }
-
 
 renderDealer(false)
 
@@ -1100,7 +1096,9 @@ document.getElementById(
 "showAnswers"
 ).onclick=
 function(){
+
 renderDealer(true)
+
 }
 
 
@@ -1110,14 +1108,15 @@ document.getElementById(
 generateDealerBets
 
 
-/* AMERICAN ROULETTE */
+
+/* AMERICAN ROULETTE BOARD */
 
 var redNumbers=
 new Set([
 1,3,5,7,9,
 12,14,16,18,
-19,21,23,25,
-27,30,32,34,36
+19,21,23,25,27,
+30,32,34,36
 ])
 
 
@@ -1132,9 +1131,7 @@ g.innerHTML=""
 
 
 var zz=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 zz.className=
 "cell zero"
@@ -1160,11 +1157,8 @@ var num=
 col*3+
 (3-row)
 
-
 var cell=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 cell.className=
 "cell number "+
@@ -1194,9 +1188,7 @@ g.appendChild(cell)
 
 
 var z=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 z.className=
 "cell zero0"
@@ -1213,20 +1205,16 @@ r++
 ){
 
 var t=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 t.className=
 "cell twoto1"
 
-t.textContent=
-"2 to 1"
+t.textContent="2 to 1"
 
 t.style.gridColumn="14"
 
-t.style.gridRow=
-r+1
+t.style.gridRow=r+1
 
 g.appendChild(t)
 
@@ -1238,23 +1226,19 @@ g.appendChild(t)
 buildBoard()
 
 
-/* BOARD VARIABLES */
-
 var boardBets=[]
-
 var boardTotal=0
-
 var winningNumber=0
 
 
-/* INSIDE BETS */
+/* EVERY BOARD BET COVERS THE WINNING NUMBER */
 
 function insideCandidates(n){
 
 var out=[]
 
 
-/* STRAIGHT UP */
+/* STRAIGHT */
 
 out.push({
 type:"straight",
@@ -1282,28 +1266,22 @@ var here=
 c*3+
 (3-row)
 
-
 if(here!==n)
 continue
 
 
 if(c<11){
 
+var b1=
+(c+1)*3+
+(3-row)
+
 out.push({
 type:"split",
 mult:17,
 a:n,
-b:
-(c+1)*3+
-(3-row),
-desc:
-"Split "+
-n+
-" / "+
-(
-(c+1)*3+
-(3-row)
-)
+b:b1,
+desc:"Split "+n+" / "+b1
 })
 
 }
@@ -1311,21 +1289,16 @@ n+
 
 if(c>0){
 
+var b2=
+(c-1)*3+
+(3-row)
+
 out.push({
 type:"split",
 mult:17,
 a:n,
-b:
-(c-1)*3+
-(3-row),
-desc:
-"Split "+
-n+
-" / "+
-(
-(c-1)*3+
-(3-row)
-)
+b:b2,
+desc:"Split "+n+" / "+b2
 })
 
 }
@@ -1333,21 +1306,16 @@ n+
 
 if(row<2){
 
+var b3=
+c*3+
+(2-row)
+
 out.push({
 type:"split",
 mult:17,
 a:n,
-b:
-c*3+
-(2-row),
-desc:
-"Split "+
-n+
-" / "+
-(
-c*3+
-(2-row)
-)
+b:b3,
+desc:"Split "+n+" / "+b3
 })
 
 }
@@ -1355,21 +1323,16 @@ c*3+
 
 if(row>0){
 
+var b4=
+c*3+
+(4-row)
+
 out.push({
 type:"split",
 mult:17,
 a:n,
-b:
-c*3+
-(4-row),
-desc:
-"Split "+
-n+
-" / "+
-(
-c*3+
-(4-row)
-)
+b:b4,
+desc:"Split "+n+" / "+b4
 })
 
 }
@@ -1405,17 +1368,9 @@ Math.floor(
 (n-1)/3
 )
 
-var rowIndex=
-(n-1)%3
-
-
 for(
-var cc=
-Math.max(0,col-1);
-
-cc<=
-Math.min(10,col);
-
+var cc=Math.max(0,col-1);
+cc<=Math.min(10,col);
 cc++
 ){
 
@@ -1431,7 +1386,6 @@ cc*3+rr+2,
 cc*3+rr+4,
 cc*3+rr+5
 ]
-
 
 if(
 nums.indexOf(n)>=0
@@ -1461,7 +1415,6 @@ Math.floor(
 (n-1)/6
 )*6+1
 
-
 if(sixStart<=31){
 
 out.push({
@@ -1483,12 +1436,9 @@ return out
 }
 
 
-/* UNIQUE KEY */
-
 function key(b){
 
-return(
-b.type+
+return b.type+
 "|"+
 [
 b.n,
@@ -1498,36 +1448,29 @@ b.start,
 b.col,
 b.row
 ].join("|")
-)
 
 }
 
 
-/* NUMBER CENTER */
+/* FIND CENTER OF A NUMBER */
 
 function cellCenter(n){
 
 var el=
 document.querySelector(
-'.cell.number[data-number="'+
-n+
-'"]'
+'.cell.number[data-number="'+n+'"]'
 )
-
 
 if(!el)
 return null
 
-
 var br=
-document
-.getElementById("board")
-.getBoundingClientRect()
-
+document.getElementById(
+"board"
+).getBoundingClientRect()
 
 var r=
 el.getBoundingClientRect()
-
 
 return{
 x:
@@ -1544,7 +1487,7 @@ r.height/2
 }
 
 
-/* ADD CHIP */
+/* ADD A CHIP */
 
 function addChipXY(
 x,
@@ -1553,87 +1496,66 @@ count,
 index
 ){
 
+var board=
+document.getElementById("board")
+
+var br=
+board.getBoundingClientRect()
+
 var chip=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 chip.className=
 "chip c"+
 (index%6)
 
-
-var br=
-document
-.getElementById("board")
-.getBoundingClientRect()
-
-
 chip.style.left=
 (
-x/
-br.width*
-100
-)+
-"%"
-
+x/br.width*100
+)+"%"
 
 chip.style.top=
 (
-y/
-br.height*
-100
-)+
-"%"
+y/br.height*100
+)+"%"
 
+var span=
+document.createElement("span")
 
-var s=
-document.createElement(
-"span"
-)
+span.textContent=count
 
-s.textContent=count
+chip.appendChild(span)
 
-chip.appendChild(s)
-
-
-document
-.getElementById("board")
-.appendChild(chip)
+board.appendChild(chip)
 
 }
 
 
-/* CLEAR */
+/* CLEAR OLD CHIPS AND WINNER */
 
 function clearChips(){
 
 document
-.querySelectorAll(
-".chip,.winner"
-)
-.forEach(
-function(x){
+.querySelectorAll(".chip,.winner")
+.forEach(function(x){
+
 x.remove()
-}
-)
+
+})
 
 }
 
 
-/* CHIP POSITION */
+/* FIND WHERE A BET SHOULD GET ITS CHIP */
 
 function basePoint(b){
 
-if(
-b.type==="straight"
-)
+if(b.type==="straight")
+
 return cellCenter(b.n)
 
 
-if(
-b.type==="split"
-){
+if(b.type==="split"){
 
 var a=
 cellCenter(b.a)
@@ -1641,44 +1563,37 @@ cellCenter(b.a)
 var c=
 cellCenter(b.b)
 
+if(!a || !c)
+return null
 
 return{
-x:
-(a.x+c.x)/2,
-
-y:
-(a.y+c.y)/2
+x:(a.x+c.x)/2,
+y:(a.y+c.y)/2
 }
 
 }
 
 
-if(
-b.type==="street"
-){
+if(b.type==="street"){
 
 var a1=
 cellCenter(b.start)
 
 var a2=
-cellCenter(
-b.start+2
-)
+cellCenter(b.start+2)
 
+if(!a1 || !a2)
+return null
 
 return{
-x:
-(a1.x+a2.x)/2,
-
+x:(a1.x+a2.x)/2,
 y:a1.y
 }
 
 }
 
 
-if(
-b.type==="corner"
-){
+if(b.type==="corner"){
 
 var n1=
 b.col*3+
@@ -1688,49 +1603,44 @@ b.row+
 var n4=
 n1+4
 
-
 var a=
 cellCenter(n1)
 
 var c=
 cellCenter(n4)
 
+if(!a || !c)
+return null
 
 return{
-x:
-(a.x+c.x)/2,
-
-y:
-(a.y+c.y)/2
+x:(a.x+c.x)/2,
+y:(a.y+c.y)/2
 }
 
 }
 
 
-if(
-b.type==="sixline"
-){
+if(b.type==="sixline"){
 
 var a3=
 cellCenter(b.start)
 
 var c3=
-cellCenter(
-b.start+5
-)
+cellCenter(b.start+5)
 
+if(!a3 || !c3)
+return null
+
+var board=
+document.getElementById("board")
+
+var br=
+board.getBoundingClientRect()
 
 return{
-x:
-(a3.x+c3.x)/2,
-
-y:
-a3.y+
-document
-.getElementById("board")
-.getBoundingClientRect()
-.height*
-.07
+x:(a3.x+c3.x)/2,
+y:a3.y+
+br.height*.07
 }
 
 }
@@ -1741,7 +1651,7 @@ return null
 }
 
 
-/* WINNER */
+/* HIGHLIGHT WINNING NUMBER */
 
 function placeWinner(){
 
@@ -1752,54 +1662,33 @@ winningNumber+
 '"]'
 )
 
-
 if(!el)
 return
-
 
 var r=
 el.getBoundingClientRect()
 
-
 var br=
-document
-.getElementById("board")
-.getBoundingClientRect()
-
+document.getElementById(
+"board"
+).getBoundingClientRect()
 
 var w=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 w.className="winner"
 
-
 w.style.left=
-(
-r.left-
-br.left
-)+
-"px"
-
+(r.left-br.left)+"px"
 
 w.style.top=
-(
-r.top-
-br.top
-)+
-"px"
-
+(r.top-br.top)+"px"
 
 w.style.width=
-r.width+
-"px"
-
+r.width+"px"
 
 w.style.height=
-r.height+
-"px"
-
+r.height+"px"
 
 document
 .getElementById("board")
@@ -1808,45 +1697,44 @@ document
 }
 
 
-/* PLACE CHIPS */
+/* PLACE ALL CHIPS */
 
 function placeChips(){
 
-var br=
-document
-.getElementById("board")
-.getBoundingClientRect()
+var board=
+document.getElementById("board")
 
+var br=
+board.getBoundingClientRect()
 
 var offsets=[
 [0,-.045],
 [-.045,0],
 [.045,0],
 [0,.045],
-[-.035,.035]
+[-.035,.035],
+[.035,-.035]
 ]
 
 
-boardBets.forEach(
-function(b,i){
+boardBets.forEach(function(b,i){
 
 var p=
 basePoint(b)
 
-
 if(!p)
 return
 
+var off=
+offsets[
+i%offsets.length
+]
 
 var dx=
-br.width*
-offsets[i][0]
-
+br.width*off[0]
 
 var dy=
-br.height*
-offsets[i][1]
-
+br.height*off[1]
 
 addChipXY(
 p.x+dx,
@@ -1855,9 +1743,7 @@ b.count,
 i
 )
 
-}
-
-)
+})
 
 }
 
@@ -1871,7 +1757,6 @@ document.getElementById(
 "breakdown"
 )
 
-
 box.innerHTML=
 '<div class="breakdown-row breakdown-head">'+
 '<div>Bet</div>'+
@@ -1881,56 +1766,38 @@ box.innerHTML=
 '</div>'
 
 
-boardBets.forEach(
-function(b){
+boardBets.forEach(function(b){
 
 var d=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 d.className=
 "breakdown-row"
-
 
 d.innerHTML=
 "<div>"+
 b.desc+
 "</div>"+
-
 "<div>"+
 b.count+
 "</div>"+
-
 "<div>"+
 b.mult+
-" to 1"+
-"</div>"+
-
+" to 1</div>"+
 "<div>"+
-(
-b.count*
-b.mult
-)+
+(b.count*b.mult)+
 "</div>"
-
 
 box.appendChild(d)
 
-}
-
-
-)
+})
 
 
 var total=
-document.createElement(
-"div"
-)
+document.createElement("div")
 
 total.className=
 "breakdown-row"
-
 
 total.innerHTML=
 '<div><b>Total</b></div>'+
@@ -1940,13 +1807,12 @@ total.innerHTML=
 boardTotal+
 '</b></div>'
 
-
 box.appendChild(total)
 
 }
 
 
-/* NEW BOARD */
+/* NEW BOARD LAYOUT */
 
 function newBoardLayout(){
 
@@ -1956,27 +1822,21 @@ boardBets=[]
 
 boardTotal=0
 
-
 document.getElementById(
 "boardAnswer"
 ).value=""
-
 
 document.getElementById(
 "boardResult"
 ).textContent=""
 
-
 document.getElementById(
 "boardResult"
-).className=
-"result"
-
+).className="result"
 
 document.getElementById(
 "breakdown"
-).className=
-"breakdown"
+).className="breakdown"
 
 
 /* WINNING NUMBER 1-25 */
@@ -2000,7 +1860,7 @@ winningNumber
 )
 
 
-/* DIFFERENT BET TYPES */
+/* ONE OF EACH MAIN INSIDE BET TYPE */
 
 var preferred=[
 "straight",
@@ -2018,25 +1878,18 @@ p++
 ){
 
 var found=
-candidates.find(
-function(b){
+candidates.find(function(b){
 
 return(
-b.type===
-preferred[p] &&
+b.type===preferred[p] &&
+!boardBets.some(function(x){
 
-!boardBets.some(
-function(x){
-return(
-key(x)===
-key(b)
-)
-}
-)
+return key(x)===key(b)
+
+})
 )
 
-}
-)
+})
 
 
 if(found)
@@ -2045,26 +1898,22 @@ boardBets.push(found)
 }
 
 
-/* FILL TO SIX BETS */
+/* FILL UP TO 6 BETS */
 
 for(
 var i=0;
-
 i<candidates.length &&
 boardBets.length<6;
-
 i++
 ){
 
 if(
-!boardBets.some(
-function(x){
-return(
-key(x)===
+!boardBets.some(function(x){
+
+return key(x)===
 key(candidates[i])
-)
-}
-)
+
+})
 ){
 
 boardBets.push(
@@ -2080,59 +1929,48 @@ boardBets=
 boardBets.slice(0,6)
 
 
-/* CHIP COUNTS 2-25 */
+/* RANDOM CHIP COUNTS — NEVER ABOVE 25 */
 
-boardBets.forEach(
-function(b){
+var chipCounts=[
+2,3,4,5,6,7,8,
+10,12,15,18,20,22,25
+]
+
+
+boardBets.forEach(function(b){
 
 b.count=
-pick([
-2,
-3,
-4,
-5,
-6,
-7,
-8,
-10,
-12,
-15,
-18,
-20,
-22,
-25
-])
-
+pick(chipCounts)
 
 boardTotal+=
-b.count*
-b.mult
+b.count*b.mult
 
-}
-)
+})
 
 
-requestAnimationFrame(
-function(){
+/*
+IMPORTANT:
+The board may be hidden when this function runs.
+Wait until the browser paints the board before
+measuring positions.
+*/
+
+requestAnimationFrame(function(){
 
 placeWinner()
 
 placeChips()
 
-}
-)
+})
 
 }
 
 
-/* CHECK */
+/* CHECK ANSWER */
 
-document
-.getElementById(
+document.getElementById(
 "checkBoard"
-)
-.onclick=
-function(){
+).onclick=function(){
 
 var input=
 document.getElementById(
@@ -2145,15 +1983,10 @@ document.getElementById(
 )
 
 var v=
-Number(
-input.value
-)
+Number(input.value)
 
 
-if(
-input.value===
-""
-){
+if(input.value===""){
 
 res.className=
 "result bad"
@@ -2166,10 +1999,7 @@ return
 }
 
 
-if(
-v===
-boardTotal
-){
+if(v===boardTotal){
 
 res.className=
 "result good"
@@ -2179,8 +2009,7 @@ res.textContent=
 boardTotal+
 " pieces."
 
-}
-else{
+}else{
 
 res.className=
 "result bad"
@@ -2195,22 +2024,17 @@ res.textContent=
 
 /* SHOW ANSWER */
 
-document
-.getElementById(
+document.getElementById(
 "showBoardAnswer"
-)
-.onclick=
-function(){
+).onclick=function(){
 
 var res=
 document.getElementById(
 "boardResult"
 )
 
-
 res.className=
 "result good"
-
 
 res.textContent=
 "Winning Number: "+
@@ -2219,64 +2043,55 @@ winningNumber+
 boardTotal+
 " pieces."
 
-
 renderBreakdown()
 
-
 document
-.getElementById(
-"breakdown"
-)
-.classList.add(
-"show"
-)
+.getElementById("breakdown")
+.classList.add("show")
 
 }
 
 
 /* NEW LAYOUT */
 
-document
-.getElementById(
+document.getElementById(
 "newLayout"
-)
-.onclick=
+).onclick=
 newBoardLayout
 
 
-/* INITIAL */
+/* INITIAL ROUNDS */
 
 generateDealerBets()
 
 newBoardLayout()
 
 
-/* IPHONE RESIZE */
+/*
+If the phone rotates or the browser resizes,
+recalculate all chip positions.
+*/
 
 window.addEventListener(
 "resize",
 function(){
 
-if(
-boardBets.length
-){
+if(boardBets.length){
 
 clearChips()
 
-
-requestAnimationFrame(
-function(){
+requestAnimationFrame(function(){
 
 placeWinner()
 
 placeChips()
 
-}
-)
+})
 
 }
 
 }
+
 )
 
 </script>
